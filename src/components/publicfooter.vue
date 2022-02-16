@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gradient-to-tl from-gray-800 via-black to-gray-900 w-full mt-12">
+  <div class="bg-gradient-to-tl from-gray-800 via-black to-gray-900 w-full">
     <div class="lg:px-32 py-10 flex justify-between">
       <div>
         <div class="font-bold text-gray-500 text-xl">About Peeza</div>

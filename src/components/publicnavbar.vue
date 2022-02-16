@@ -23,14 +23,14 @@
           </router-link>
         </div>
         <div>
-          <a href="#" class="no-underline bg-green-700 inline-block text-sm px-4 py-2 leading-none border rounded 
+          <router-link to="/register" class="no-underline bg-green-700 inline-block text-sm px-4 py-2 leading-none border rounded 
             text-white border-green-700 hover:border-transparent hover:text-teal hover:bg-green-900 mt-4 
             sm:mt-0 mr-4"
-          >Sign Up</a>
-          <a href="#" class="no-underline inline-block text-sm px-4 py-2 leading-none border rounded 
+          >Sign Up</router-link>
+          <router-link to="/login" class="no-underline inline-block text-sm px-4 py-2 leading-none border rounded 
             text-white border-black hover:border-transparent hover:text-teal hover:border-white mt-4 
             sm:mt-0"
-          >Sign In</a>
+          >Sign In</router-link>
         </div>
       </div>
     </nav>

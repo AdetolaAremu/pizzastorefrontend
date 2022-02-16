@@ -3,13 +3,13 @@
   <!-- <SideBar /> -->
 	<!-- <SidebarMenu :menu="menu" /> -->
 	<div class="pt-24 grid grid-cols-1 lg:grid-cols-3 px-24">
-		<router-link to="/" class="bg-gradient-to-br from-gray-500 via-gray-800 to-gray-900 px-20 py-10 text-center text-white mr-2 font-bold text-3xl rounded-md">
+		<router-link to="/user/dashboard" class="bg-gradient-to-br from-gray-500 via-gray-800 to-gray-900 px-20 py-10 text-center text-white mr-2 font-bold text-3xl rounded-md">
 			Dashboard
 		</router-link>
-		<router-link to="/" class="bg-gradient-to-br from-gray-500 via-gray-800 to-gray-900 px-20 py-10 text-center text-white mr-2 font-bold text-3xl rounded-md">
+		<router-link to="/user/order-history" class="bg-gradient-to-br from-gray-500 via-gray-800 to-gray-900 px-20 py-10 text-center text-white mr-2 font-bold text-3xl rounded-md">
 			Order History
 		</router-link>
-		<router-link to="/" class="bg-gradient-to-br from-gray-500 via-gray-800 to-gray-900 px-20 py-10 text-center text-white mr-2 font-bold text-3xl rounded-md">
+		<router-link to="/user/profile" class="bg-gradient-to-br from-gray-500 via-gray-800 to-gray-900 px-20 py-10 text-center text-white mr-2 font-bold text-3xl rounded-md">
 			Profile
 		</router-link>
 	</div>
