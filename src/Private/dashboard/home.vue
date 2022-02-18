@@ -1,17 +1,6 @@
 <template>
   <div class="px-24 mt-5">
-    <div class="font-semibold mt-10">User Statistics Overview</div>
-    <div class="mt-2 grid grid-cols-1 lg:grid-cols-3">
-      <router-link to="/" class="bg-indigo-600 h-40 text-center text-white mr-2 font-bold text-xl rounded-md">
-        Total Amount spent
-      </router-link>
-      <router-link to="/" class="bg-green-600 h-40 text-center text-white mr-2 font-bold text-xl rounded-md">
-        Total Orders
-      </router-link>
-      <router-link to="/" class="bg-yellow-600 h-40 text-center text-white mr-2 font-bold text-xl rounded-md">
-        Pending Orders
-      </router-link>
-    </div>
+    
 
     <div class="font-semibold mt-10">Active Orders</div>
     <table class="table-fixed w-full mt-2">
@@ -48,8 +37,22 @@
 </template>
 
 <script>
+// import { onMounted } from '@vue/runtime-core'
+import { useToast } from "vue-toastification";
 export default {
+  setup(){
+    const toast = useToast()
+    
+   
+    // toast.success("My toast content", {
+    //   timeout: 10000
+    // });
 
+    // const user = computed(() => store.state.user)
+
+        
+    return{ toast }
+  }
 }
 </script>
 

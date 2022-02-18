@@ -1,13 +1,12 @@
 <template>
   <Navbar />
-  <div class="bg-gradient-to-tl from-gray-800 via-black to-gray-900 h-screen">
-    <div class="font-bold text-xl text-center text-white pt-32">Register</div>
+  <div class="bg-gradient-to-tl from-gray-800 via-black to-gray-900 h-full lg:h-screen">
+    <div class="font-bold text-2xl text-center text-white mb-5 pt-32">LOGIN</div>
     <div class="flex justify-center pb-12">
-      <div class="w-3/5">
-        <form @submit.prevent="registerUser" class="w-full mt-5 px-2">
-         
-          <div class="grid grid-cols-1 lg:grid-cols-2 -mx-3 mb-6">
-            <div class="w-full px-3">
+      <div class="">
+        <form @submit.prevent="loginUser" class="w-full mt-5 px-2">
+          <div class="grid grid-cols-1 -mx-3 mb-6">
+            <div class="w-full lg:w-96 px-3">
               <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2" for="grid-password">
                 Email
               </label>
@@ -15,8 +14,8 @@
               <div class="text-red-600 text-sm " v-if="validationErrors.email">{{ validationErrors.email[0] }}</div>
             </div>
           </div>
-          <div class="grid grid-cols-1 lg:grid-cols-2 -mx-3 mb-6">
-            <div class="w-full px-3">
+          <div class="grid grid-cols-1 -mx-3 mb-6">
+            <div class="w-full lg:w-96 px-3">
               <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2" for="grid-last-name">
                 Password
               </label>
@@ -25,7 +24,7 @@
             </div>
           </div>
           <div class="text-center">
-            <button class="bg-green-600 text-white font-bold rounded px-5 py-3 mb-3">Submit</button>
+            <button class="bg-green-600 text-white font-bold rounded px-5 py-3 mb-3 hover:bg-green-800">Submit</button>
           </div>
         </form>
       </div>
@@ -39,39 +38,44 @@
 import Navbar from '../components/publicnavbar.vue';
 import { ref } from '@vue/reactivity';
 import axios from 'axios';
+import { useToast } from "vue-toastification";
 import { useRouter } from 'vue-router';
 
 export default {
   components: {Navbar},
   setup(){
-    const first_name = ref('');
-    const last_name = ref('');
-    const middle_name = ref('');
     const email = ref('');
     const password = ref('');
-    const confirm_password = ref('');
-    const router = useRouter('');
     const validationErrors = ref('');
+    const toast = useToast()
+    const router = useRouter()
 
-    const registerUser = async () => {
-      axios.post('register', {
-        first_name:first_name.value,
-        last_name:last_name.value,
-        middle_name:middle_name.value,
+    const loginUser = async () => {
+        await axios.post('login', {
         email:email.value,
         password:password.value,
-        confirm_password:confirm_password.value
-      }).then(() => {
-        router.push('/')
+      }).then((response) => {
+        localStorage.setItem('token', response.data.token);
+        axios.defaults.headers['Authorization'] = `Bearer ${response.data.token}`
+        router.push('/user/dashboard')
+        toast.success("Login successful", {
+          timeout: 10000
+        });
       }).catch((error) => {
-        if(error.response.status === 422){
+        if (error.response) {
+          if(error.response.status === 422){
           validationErrors.value =  error.response.data.errors
-          console.log('validate', validationErrors.value.first_name)
+          }
+          if (error.response.status === 400) {
+            toast.error("Email or password do not match", {
+              timeout: 10000
+            });
+          }
         }
       })
     }
 
-    return {email, password, registerUser, validationErrors}
+    return {email, password, loginUser, validationErrors, toast}
   }
 }
 </script>

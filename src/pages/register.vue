@@ -1,7 +1,7 @@
 <template>
   <Navbar />
-  <div class="bg-gradient-to-tl from-gray-800 via-black to-gray-900 h-screen">
-    <div class="font-bold text-xl text-center text-white pt-32">Register</div>
+  <div class="bg-gradient-to-tl from-gray-800 via-black to-gray-900 h-full lg:h-screen">
+    <div class="font-bold text-2xl text-center text-white mb-5 pt-32">Register</div>
     <div class="flex justify-center pb-12">
       <div class="w-3/5">
         <form @submit.prevent="registerUser" class="w-full mt-5 px-2">
@@ -22,7 +22,7 @@
             </div>
           </div>
           <div class="grid grid-cols-1 lg:grid-cols-2 -mx-3 mb-6">
-            <div class="w-full px-3">
+            <div class="w-full px-3 mb-6 md:mb-0">
               <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2" for="grid-last-name">
                 Middle Name
               </label>
@@ -38,7 +38,7 @@
             </div>
           </div>
           <div class="grid grid-cols-1 lg:grid-cols-2 -mx-3 mb-6">
-            <div class="w-full px-3">
+            <div class="w-full px-3 mb-6 md:mb-0">
               <label class="block uppercase tracking-wide text-white text-xs font-bold mb-2" for="grid-last-name">
                 Password
               </label>
@@ -60,13 +60,11 @@
       </div>
     </div>
   </div>
-  <!-- <Footer /> -->
 </template>
 
 <script>
 
 import Navbar from '../components/publicnavbar.vue';
-// import Footer from '../components/publicfooter.vue';
 import { ref } from '@vue/reactivity';
 import axios from 'axios';
 import { useRouter } from 'vue-router';

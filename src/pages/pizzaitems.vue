@@ -13,7 +13,7 @@
       </select>
     </div>
 
-    <div class="grid grid-cols-3">
+    <div class="grid grid-cols-3 mb-10">
       <div class="flex mt-2">
         <img class="h-60 w-48" src="../assets/images/pizza-2.jpg" alt="">
         <div class=" bg-gradient-to-tl from-gray-800 via-black to-gray-900 h-60 w-52">

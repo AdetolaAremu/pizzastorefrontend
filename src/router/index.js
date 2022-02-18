@@ -8,6 +8,10 @@ import Profile from '../Private/dashboard/profile.vue';
 import Register from '../pages/register.vue'
 import Login from '../pages/login.vue'
 
+const isLoggedIn = () => {
+  return localStorage.getItem('token')
+}
+
 const routes = [
   {path:"/", component:Home},
   {path:"/store", component:PizzaItem},
@@ -16,6 +20,13 @@ const routes = [
   {
     path:"/user",
     component: Private,
+    beforeEnter(to, from, next) {
+      if (isLoggedIn()) {
+        next();
+      } else {
+        next('/login');
+      }
+    },
     children:
     [
       {path:"/user/dashboard", component:DashboardHome},

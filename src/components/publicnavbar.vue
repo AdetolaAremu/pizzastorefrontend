@@ -12,13 +12,13 @@
       </div>
       <div :class="opened ? 'block': 'hidden'" class="w-full z-50 flex-grow sm:flex sm:items-center sm:w-auto">
         <div class="text-sm sm:flex-grow lg:text-center">
-          <router-link to="/" href="#responsive-header" class="no-underline block mt-4 text-lg sm:inline-block sm:mt-0 text-teal-lighter hover:text-white mr-4">
+          <router-link to="/" class="no-underline block mt-4 text-lg sm:inline-block sm:mt-0 text-teal-lighter hover:text-white mr-4">
             Home
           </router-link>
-          <router-link to="/store" href="#responsive-header" class="no-underline block mt-4 text-lg sm:inline-block sm:mt-0 text-teal-lighter hover:text-white mr-4">
+          <router-link to="/store" class="no-underline block mt-4 text-lg sm:inline-block sm:mt-0 text-teal-lighter hover:text-white mr-4">
             Store
           </router-link>
-          <router-link to="/" href="#responsive-header" class="no-underline block mt-4 text-lg sm:inline-block sm:mt-0 text-teal-lighter hover:text-white">
+          <router-link to="/" class="no-underline block mt-4 text-lg sm:inline-block sm:mt-0 text-teal-lighter hover:text-white">
             Github
           </router-link>
         </div>
@@ -31,6 +31,10 @@
             text-white border-black hover:border-transparent hover:text-teal hover:border-white mt-4 
             sm:mt-0"
           >Sign In</router-link>
+           <!-- <router-link to="/user/dashboard" class="no-underline bg-green-700 inline-block text-sm px-4 py-2 leading-none border rounded 
+            text-white border-green-700 hover:border-transparent hover:text-teal hover:bg-green-900 mt-4 
+            sm:mt-0 mr-4"
+          >Dashboard</router-link> -->
         </div>
       </div>
     </nav>

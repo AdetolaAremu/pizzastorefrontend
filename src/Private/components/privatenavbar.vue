@@ -12,25 +12,27 @@
       </div>
       <div :class="opened ? 'block': 'hidden'" class="w-full z-50 flex-grow sm:flex sm:items-center sm:w-auto">
         <div class="text-sm sm:flex-grow lg:text-center">
-          <router-link to="/" href="#responsive-header" class="no-underline block mt-4 text-lg sm:inline-block sm:mt-0 text-teal-lighter hover:text-white mr-4">
-            Home
+          <router-link to="/user/dashboard" class="no-underline block mt-4 text-lg sm:inline-block sm:mt-0 text-teal-lighter font-semibold hover:text-white mr-4">
+            Dashboard
           </router-link>
-          <router-link to="/store" href="#responsive-header" class="no-underline block mt-4 text-lg sm:inline-block sm:mt-0 text-teal-lighter hover:text-white mr-4">
+          <router-link to="/user/order-history" class="no-underline block mt-4 text-lg sm:inline-block sm:mt-0 text-teal-lighter font-semibold hover:text-white mr-4">
+            Order History
+          </router-link>
+          <router-link to="/user/profile" class="no-underline block mt-4 text-lg sm:inline-block sm:mt-0 text-teal-lighter font-semibold hover:text-white mr-4">
+            Profile
+          </router-link>
+          <router-link to="/store" class="no-underline block mt-4 text-lg sm:inline-block sm:mt-0 text-teal-lighter font-semibold hover:text-white">
             Store
           </router-link>
-          <router-link to="/" href="#responsive-header" class="no-underline block mt-4 text-lg sm:inline-block sm:mt-0 text-teal-lighter hover:text-white">
-            Github
-          </router-link>
         </div>
-        <div>
-          <!-- <a href="#" class="no-underline bg-green-700 inline-block text-sm px-4 py-2 leading-none border rounded 
-            text-white border-green-700 hover:border-transparent hover:text-teal hover:bg-green-900 mt-4 
-            sm:mt-0 mr-4"
-          >Sign Up</a> -->
-          <a href="#" class="no-underline inline-block text-sm px-4 py-2 leading-none border rounded 
-            text-white border-black hover:border-transparent hover:text-teal hover:border-white mt-4 
-            sm:mt-0"
-          >Name Here</a>
+        <div class="relative">
+          <a href="#" class="no-underline inline-block text-lg px-4 py-2 leading-none border rounded 
+            text-white border-black mt-4 -ml-4 sm:mt-0 " @click="toggleNameDropDown"
+          >Hi, {{ user?.first_name }}</a>
+          <div v-if="toggleDropDown" class="absolute w-28 top-auto left-0 py-2 mt-2 rounded-lg border-gray-900 bg-white shadow-xl">
+            <a class="text-sm text-gray-900 block px-4 py-2 cursor-pointer">Profile</a>
+            <button @click="logout" class="text-sm bg-red-600 ml-2 rounded-sm text-white block px-4 py-2 cursor-pointer">Logout</button>
+          </div>
         </div>
       </div>
     </nav>
@@ -39,15 +41,31 @@
 
 <script>
 import { ref } from '@vue/reactivity'
+import { computed } from '@vue/runtime-core';
+import { useStore } from 'vuex';
 export default {
   setup(){
-    const opened = ref(false)
+    const opened = ref(false);
+    const toggleDropDown = ref(false)
+    const store = useStore();
 
     const toggleNav = () => {
       opened.value = !opened.value
     }
 
-    return { opened, toggleNav }
+    const toggleNameDropDown = () => {
+      toggleDropDown.value = !toggleDropDown.value
+    }
+
+    const logout = () => {
+      localStorage.clear();
+
+      window.location.href = '/login'
+    }
+
+    const user = computed(() => store.state.user)
+
+    return { opened, toggleNav, toggleDropDown, toggleNameDropDown, logout, user }
   }
 }
 </script>

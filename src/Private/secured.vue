@@ -1,42 +1,44 @@
 <template>
 	<Navbar />
-  <!-- <SideBar /> -->
-	<!-- <SidebarMenu :menu="menu" /> -->
-	<div class="pt-24 grid grid-cols-1 lg:grid-cols-3 px-24">
-		<router-link to="/user/dashboard" class="bg-gradient-to-br from-gray-500 via-gray-800 to-gray-900 px-20 py-10 text-center text-white mr-2 font-bold text-3xl rounded-md">
-			Dashboard
-		</router-link>
-		<router-link to="/user/order-history" class="bg-gradient-to-br from-gray-500 via-gray-800 to-gray-900 px-20 py-10 text-center text-white mr-2 font-bold text-3xl rounded-md">
-			Order History
-		</router-link>
-		<router-link to="/user/profile" class="bg-gradient-to-br from-gray-500 via-gray-800 to-gray-900 px-20 py-10 text-center text-white mr-2 font-bold text-3xl rounded-md">
-			Profile
-		</router-link>
+ 
+	<div class="pt-24 px-24">
+		<div class="font-semibold mt-10">Overview</div>
+    <div class="mt-2 grid grid-cols-1 lg:grid-cols-3">
+      <div class="bg-indigo-600 h-40 text-center text-white mr-2 font-bold text-xl rounded-md">
+        Total Amount spent
+      </div>
+      <div class="bg-green-600 h-40 text-center text-white mr-2 font-bold text-xl rounded-md">
+        Total Orders
+      </div>
+      <div class="bg-yellow-600 h-40 text-center text-white mr-2 font-bold text-xl rounded-md">
+        Pending Orders
+      </div>
+    </div>
 	</div>
   <router-view />
 	<Footer />
-
-
-	<!-- <div class="pt-40">
-		name it overview...
-		total amount spent
-		total orders
-		pending orders
-	</div> -->
 </template>
 
 <script>
-// import { ref } from '@vue/reactivity';
-// import SideBar from '../Private/components/sidebar.vue';
 import Navbar from './components/privatenavbar.vue';
 import Footer from '../components/publicfooter.vue';
-// import { SidebarMenu } from 'vue-sidebar-menu'
+import axios from 'axios';
+import { onMounted } from '@vue/runtime-core';
+import { useStore } from 'vuex'
 export default {
   components:{ Navbar, Footer },
   setup(){
-   
+		const store = useStore();
 
-    return {  }
+		const getUser = async () => {
+			let response = await axios.get('user')
+
+			await store.dispatch('getCurrentUser', response.data.data)
+		}
+
+		onMounted(getUser())
+
+    return { getUser }
   }
 }
 </script>

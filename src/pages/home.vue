@@ -198,7 +198,7 @@
 import Navbar from '../components/publicnavbar.vue';
 import Footer from '../components/publicfooter.vue';
 export default {
-  components:{ Navbar, Footer }
+  components:{ Navbar, Footer },
 }
 </script>
 
