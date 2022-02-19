@@ -5,8 +5,9 @@ import Private from '../Private/secured.vue';
 import DashboardHome from '../Private/dashboard/home.vue';
 import OrderHistory from '../Private/dashboard/order-history.vue';
 import Profile from '../Private/dashboard/profile.vue';
-import Register from '../pages/register.vue'
-import Login from '../pages/login.vue'
+import Cart from '../pages/cart.vue';
+import Register from '../pages/register.vue';
+import Login from '../pages/login.vue';
 
 const isLoggedIn = () => {
   return localStorage.getItem('token')
@@ -17,6 +18,7 @@ const routes = [
   {path:"/store", component:PizzaItem},
   {path:"/register", component:Register},
   {path:"/login", component:Login},
+  {path:"/cart", component:Cart},
   {
     path:"/user",
     component: Private,

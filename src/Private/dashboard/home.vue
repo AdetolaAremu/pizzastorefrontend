@@ -1,8 +1,6 @@
 <template>
   <div class="px-24 mt-5">
-    
-
-    <div class="font-semibold mt-10">Active Orders</div>
+    <div class="font-semibold mt-10">Order History</div>
     <table class="table-fixed w-full mt-2">
       <thead class="bg-gray-300 py-4">
         <tr>

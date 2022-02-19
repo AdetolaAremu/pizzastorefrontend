@@ -14,92 +14,14 @@
     </div>
 
     <div class="grid grid-cols-3 mb-10">
-      <div class="flex mt-2">
+      <div class="flex mt-2" v-for="(pizza, index) in pizzaitems" :key="index">
         <img class="h-60 w-48" src="../assets/images/pizza-2.jpg" alt="">
         <div class=" bg-gradient-to-tl from-gray-800 via-black to-gray-900 h-60 w-52">
-          <div class="font-semibold text-lg text-center mt-3 mb-2 text-white">Lagos Pizza</div>
-          <div class="px-3 text-gray-400">
-            This is the pizza variant you will love to have and we say
-            and we try thats the shit we post here
-          </div>
+          <div class="font-semibold text-lg text-center mt-3 mb-2 text-white">{{ pizza.name }}</div>
+          <div class="px-3 text-gray-400">{{ pizza.description }}</div>
           <div class="mt-5 flex justify-between px-3">
-            <div class="text-yellow-700 font-bold text-lg">#1500</div>
-            <button class="bg-red-700 text-white rounded-full py-1 px-3">Add to cart</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="flex mt-2">
-        <img class="h-60 w-48" src="../assets/images/pizza-2.jpg" alt="">
-        <div class=" bg-gradient-to-tl from-gray-800 via-black to-gray-900 h-60 w-52">
-          <div class="font-semibold text-lg text-center mt-3 mb-2 text-white">Lagos Pizza</div>
-          <div class="px-3 text-gray-400">
-            This is the pizza variant you will love to have and we say
-            and we try thats the shit we post here
-          </div>
-          <div class="mt-5 flex justify-between px-3">
-            <div class="text-yellow-700 font-bold text-lg">#1500</div>
-            <button class="bg-red-700 text-white rounded-full py-1 px-3">Add to cart</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="flex mt-2">
-        <img class="h-60 w-48" src="../assets/images/pizza-2.jpg" alt="">
-        <div class=" bg-gradient-to-tl from-gray-800 via-black to-gray-900 h-60 w-52">
-          <div class="font-semibold text-lg text-center mt-3 mb-2 text-white">Lagos Pizza</div>
-          <div class="px-3 text-gray-400">
-            This is the pizza variant you will love to have and we say
-            and we try thats the shit we post here
-          </div>
-          <div class="mt-5 flex justify-between px-3">
-            <div class="text-yellow-700 font-bold text-lg">#1500</div>
-            <button class="bg-red-700 text-white rounded-full py-1 px-3">Add to cart</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="flex mt-2">
-        <img class="h-60 w-48" src="../assets/images/pizza-2.jpg" alt="">
-        <div class=" bg-gradient-to-tl from-gray-800 via-black to-gray-900 h-60 w-52">
-          <div class="font-semibold text-lg text-center mt-3 mb-2 text-white">Lagos Pizza</div>
-          <div class="px-3 text-gray-400">
-            This is the pizza variant you will love to have and we say
-            and we try thats the shit we post here
-          </div>
-          <div class="mt-5 flex justify-between px-3">
-            <div class="text-yellow-700 font-bold text-lg">#1500</div>
-            <button class="bg-red-700 text-white rounded-full py-1 px-3">Add to cart</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="flex mt-2">
-        <img class="h-60 w-48" src="../assets/images/pizza-2.jpg" alt="">
-        <div class=" bg-gradient-to-tl from-gray-800 via-black to-gray-900 h-60 w-52">
-          <div class="font-semibold text-lg text-center mt-3 mb-2 text-white">Lagos Pizza</div>
-          <div class="px-3 text-gray-400">
-            This is the pizza variant you will love to have and we say
-            and we try thats the shit we post here
-          </div>
-          <div class="mt-5 flex justify-between px-3">
-            <div class="text-yellow-700 font-bold text-lg">#1500</div>
-            <button class="bg-red-700 text-white rounded-full py-1 px-3">Add to cart</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="flex mt-2">
-        <img class="h-60 w-48" src="../assets/images/pizza-2.jpg" alt="">
-        <div class=" bg-gradient-to-tl from-gray-800 via-black to-gray-900 h-60 w-52">
-          <div class="font-semibold text-lg text-center mt-3 mb-2 text-white">Lagos Pizza</div>
-          <div class="px-3 text-gray-400">
-            This is the pizza variant you will love to have and we say
-            and we try thats the shit we post here
-          </div>
-          <div class="mt-5 flex justify-between px-3">
-            <div class="text-yellow-700 font-bold text-lg">#1500</div>
-            <button class="bg-red-700 text-white rounded-full py-1 px-3">Add to cart</button>
+            <div class="text-yellow-700 font-bold text-lg">{{ pizza.price }}</div>
+            <button class="bg-red-700 text-white rounded-full py-1 px-3" @click="addToCart(pizza)">Add to cart</button>
           </div>
         </div>
       </div>
@@ -111,8 +33,45 @@
 <script>
 import Navbar from '../components/publicnavbar.vue';
 import Footer from '../components/publicfooter.vue';
+import { ref } from '@vue/reactivity';
+import axios from 'axios';
+import { onMounted } from '@vue/runtime-core';
+import { useToast } from 'vue-toastification'
 export default {
-  components:{ Navbar, Footer }
+  components:{ Navbar, Footer },
+  setup(){
+    const pizzaitems = ref('')
+    const currentPizzaId = ref('')
+    const toast = useToast()
+
+    const getAllPizzas = async () => {
+      await axios.get('all-pizzas')
+      .then((response) => {
+        pizzaitems.value = response.data.data
+      })
+    }
+
+    // should use vuex for this
+    const addToCart = async (pizza) => {
+      await axios.post('carts', {
+        pizza_id:pizza.id,
+        pizza_name:pizza.name,
+        price:pizza.price,
+      }).then((res) => {
+        toast.success((res.data.message), {
+          timeout:5000
+        })
+      }).catch((error) => {
+        if (error.response) {
+          console.log('This is a pizza')
+        }
+      })
+    }
+
+    onMounted(getAllPizzas())
+
+    return { pizzaitems, getAllPizzas, addToCart, currentPizzaId }
+  }
 }
 </script>
 
