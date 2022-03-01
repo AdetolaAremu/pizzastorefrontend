@@ -74,7 +74,6 @@ export default {
         }
       })
     }
-
     return {email, password, loginUser, validationErrors, toast}
   }
 }

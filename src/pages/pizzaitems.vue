@@ -37,12 +37,14 @@ import { ref } from '@vue/reactivity';
 import axios from 'axios';
 import { onMounted } from '@vue/runtime-core';
 import { useToast } from 'vue-toastification'
+import { useStore } from 'vuex';
 export default {
   components:{ Navbar, Footer },
   setup(){
     const pizzaitems = ref('')
     const currentPizzaId = ref('')
     const toast = useToast()
+    const store = useStore()
 
     const getAllPizzas = async () => {
       await axios.get('all-pizzas')
@@ -58,12 +60,17 @@ export default {
         pizza_name:pizza.name,
         price:pizza.price,
       }).then((res) => {
+        store.dispatch("getCartItems")
         toast.success((res.data.message), {
           timeout:5000
         })
       }).catch((error) => {
         if (error.response) {
-          console.log('This is a pizza')
+          if(error.response.status === 422){
+            toast.info("Pizza item is in your cart already!", {
+              timeout:5000
+            })
+          }
         }
       })
     }

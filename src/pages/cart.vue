@@ -1,7 +1,7 @@
 <template>
   <Navbar />
   
-  <div class="py-56 inset-0" v-if="cartItems === null">
+  <div class="py-56 inset-0" v-if="cartItems === null || cartItems === ''">
     <div class="flex h-full">
       <div class="m-auto bg-gradient-to-tl from-gray-800 via-black to-gray-900 p-2 rounded shadow w-10/12 md:w-1/3">
         <div class="text-center my-5 text-white font-semibold">
@@ -11,20 +11,44 @@
     </div>
   </div>
 
-  <div class="pt-24 pb-16 px-20" v-for="pizza in cartItems" :key="pizza">
-    <div class="w-56 py-8" v-for="thepizza in pizza.items" :key="thepizza">
-      <div class="flex mt-2">
-        <img class="h-80 w-72" src="../assets/images/pizza-2.jpg" alt="">
-        <div class=" bg-gradient-to-tl from-gray-800 via-black to-gray-900 h-80 w-72">
-          <div class="font-semibold text-lg text-center mt-3 mb-2 text-white">{{ thepizza.pizza_name }}</div>
-          <!-- <div class="px-3 text-gray-400">description here</div> -->
-          <div class="mt-5 flex justify-between px-3">
-            <div class="text-yellow-700 font-bold text-lg">{{ thepizza.price }}</div>
-            <button class="bg-red-700 text-white rounded-full py-1 px-3">Remove from cart</button>
-          </div>
-        </div>
+  <div class="mb-3" v-for="pizza in cartItems" :key="pizza">
+    <div class="pt-24 lg:px-16 grid lg:grid-cols-2 sm:grid-cols-1 md:grid-cols-1">
+      <div class="flex justify-between bg-gray-100 py-2 px-3 rounded-md m-2 hover:bg-blue-200" 
+        v-for="thepizza in pizza.items" :key="thepizza"
+      >
+        <span> <img class="h-40 w-60" src="../assets/images/pizza-2.jpg" alt=""></span>
+        <span class="flex cursor-pointer">
+          <span class="ml-3 mt-1 flex-col flex">
+            <span class="font-semibold text-xl">{{ thepizza.pizza_name }}</span>
+            <div class="font-semibold mt-3 mr-1 text-xl"><span class="text-xs text-gray-600">NGN</span>{{ thepizza.price }}</div>
+            <div class="mt-3">
+              <span class="mr-2 text-xs">Qty</span>
+              <input class="w-10 text-center" v-model="thepizza.quantity" type="number" name="" id="">
+            </div>
+            <div class="mt-3">
+              <span class="mr-1 text-xs">Total:</span>
+              <span class="font-semibold">{{ pizza.grand_total }}</span>
+            </div>
+          </span>
+        </span>
+        <span><button class="bg-red-700 rounded-full mt-5 py-3 px-5 text-white font-bold">x</button></span>
       </div>
     </div>
+    <div class="flex justify-center text-white">
+      <button class="flex justify-between w-96 bg-green-700 rounded-lg px-6 py-2 font-semibold">
+        <div>
+          <div>Grand Total</div>
+          <div class="text-xl"><span class="text-xs mr-1">NGN</span>{{ pizza.grand_total }}</div>
+        </div>
+        <div class="text-2xl mt-2">
+          Proceed
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <div>
+
   </div>
   
   <Footer />
@@ -35,18 +59,22 @@ import Navbar from '../components/publicnavbar.vue';
 import Footer from '../components/publicfooter.vue';
 import axios from 'axios';
 import { useToast } from 'vue-toastification';
-import { onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue';
+import { useStore } from 'vuex';
 export default {
   components: { Navbar, Footer },
   setup(){
     const cartItems = ref('');
     const toast = useToast();
+    const currentStep = ref(0)
+    const inputQuantity = ref('')
+    const store = useStore()
 
     const getCartItems = async () => {
       await axios.get('carts')
       .then((res) => {
-        console.log('response', res.data.data)
         cartItems.value = res.data.data
+        store.dispatch('getCartCount', res.data.data[0].items.length)
       }).catch((error) => {
         if(error.response){
           if (error.response.status === 500) {
@@ -60,7 +88,7 @@ export default {
 
     onMounted(getCartItems())
 
-    return { cartItems, getCartItems }
+    return { cartItems, getCartItems, currentStep, inputQuantity }
   }
 }
 </script>

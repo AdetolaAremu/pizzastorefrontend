@@ -1,5 +1,11 @@
 <template>
-  <div class="px-24 mt-5">
+  <div class="px-0 mt-5">
+    <div class="bg-white py-2 px-3 rounded-lg">
+      <div class="font-semibold text-center text-gray-600">Top Selling Pizza</div>
+      <div>
+
+      </div>
+    </div>
     <div class="font-semibold mt-10">Order History</div>
     <table class="table-fixed w-full mt-2">
       <thead class="bg-gray-300 py-4">
@@ -55,5 +61,7 @@ export default {
 </script>
 
 <style scoped>
-
+body {
+  background-color: rgba(209, 213, 219);
+}
 </style>

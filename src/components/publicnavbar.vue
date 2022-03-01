@@ -23,6 +23,19 @@
           </router-link>
         </div>
         <div>
+          <router-link to="/cart" class="no-underline block text-lg sm:inline-block sm:mt-0 text-teal-lighter 
+            hover:text-white lg:pr-5"
+          >
+            <svg class="w-6 h-6 lg:pt-2 relative" fill="none" stroke="currentColor" viewBox="0 0 24 22" 
+              xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" 
+              stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 
+              1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
+              </path>
+            </svg>
+            <span class="absolute text-xs bg-red-600 text-white p-1 lg:top-4 rounded-full lg:ml-3">
+              {{ countCartItems }}
+            </span>
+          </router-link>
           <router-link to="/register" class="no-underline bg-green-700 inline-block text-sm px-4 py-2 leading-none border rounded 
             text-white border-green-700 hover:border-transparent hover:text-teal hover:bg-green-900 mt-4 
             sm:mt-0 mr-4"
@@ -42,16 +55,23 @@
 </template>
 
 <script>
-import { ref } from '@vue/reactivity'
+import { ref, computed } from '@vue/reactivity'
+import { useStore } from 'vuex'
+import { onMounted } from '@vue/runtime-core'
 export default {
   setup(){
     const opened = ref(false)
+    const store = useStore()
 
     const toggleNav = () => {
       opened.value = !opened.value
     }
 
-    return { opened, toggleNav }
+    const countCartItems = computed(() =>  store.getters.getCartLength)
+
+    onMounted(countCartItems, store.dispatch("getCartItems"))
+
+    return { opened, toggleNav, countCartItems }
   }
 }
 </script>
