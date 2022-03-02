@@ -13,7 +13,10 @@ export default createStore({
       state.user = user
     },
     SET_AUTHENTICATED_TO_TRUE(state){
-      state.isAuthenticated == true
+      state.isAuthenticated = true
+    },
+    SET_AUTHENTICATED_TO_FALSE(state){
+      state.isAuthenticated = false
     },
     GET_CART_COUNT(state, cartCount){
       state.cartCount = cartCount
@@ -22,9 +25,10 @@ export default createStore({
   actions: {
     getCurrentUser: ({commit}, user) => commit('GET_CURRENT_USER', user),
     getCartCount: ({commit}, cartCount) => commit('GET_CART_COUNT', cartCount),
+    changeAuthenticationToTrue: ({ commit }, isAuthenticated) => 
+      commit('SET_AUTHENTICATED', isAuthenticated === true),
     getCartItems ({ commit }) {
       axios.get('carts').then((response) => {
-        console.log('cart', response.data.data)
         commit('GET_CART_COUNT', response.data.data[0].items.length)
       });
     },

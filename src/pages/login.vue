@@ -40,6 +40,7 @@ import { ref } from '@vue/reactivity';
 import axios from 'axios';
 import { useToast } from "vue-toastification";
 import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 export default {
   components: {Navbar},
@@ -49,6 +50,7 @@ export default {
     const validationErrors = ref('');
     const toast = useToast()
     const router = useRouter()
+    const store = useStore()
 
     const loginUser = async () => {
         await axios.post('login', {
@@ -58,6 +60,7 @@ export default {
         localStorage.setItem('token', response.data.token);
         axios.defaults.headers['Authorization'] = `Bearer ${response.data.token}`
         router.push('/user/dashboard')
+        store.dispatch('changeAuthenticationToTrue')
         toast.success("Login successful", {
           timeout: 10000
         });

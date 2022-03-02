@@ -6,6 +6,7 @@ import DashboardHome from '../Private/dashboard/home.vue';
 import OrderHistory from '../Private/dashboard/order-history.vue';
 import Profile from '../Private/dashboard/profile.vue';
 import Cart from '../pages/cart.vue';
+import paymentsuccess from '../pages/paymentsuccess.vue';
 import Register from '../pages/register.vue';
 import Login from '../pages/login.vue';
 
@@ -19,6 +20,7 @@ const routes = [
   {path:"/register", component:Register},
   {path:"/login", component:Login},
   {path:"/cart", component:Cart},
+  {path:"/payment-sucess", component:paymentsuccess},
   {
     path:"/user",
     component: Private,

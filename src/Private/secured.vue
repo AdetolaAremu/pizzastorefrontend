@@ -84,10 +84,19 @@
     <main id="content" class="flex-1 p-6 lg:px-4 bg-gray-300">
       <div class="max-w-7xl mx-auto">
         <!-- Replace with your content -->
+        
 
         <div class="flex justify-between">
           <div>Home</div>
-          <div class="font-semibold">Hi, {{ loggedInUser?.first_name }}</div>
+          <div class="relative">
+            <a href="#" class="no-underline inline-block text-lg px-4 py-2 leading-none border rounded 
+               border-black mt-4 -ml-4 sm:mt-0 " @click="toggleNameDropDown"
+            >Hi, {{ loggedInUser?.first_name }}</a>
+            <div v-if="toggleDropDown" class="absolute w-28 top-auto left-0 py-2 mt-2 rounded-lg border-gray-900 bg-white shadow-xl">
+              <a class="text-sm text-gray-900 block px-4 py-2 cursor-pointer">Profile</a>
+              <button @click="logout" class="text-sm bg-red-600 ml-2 rounded-sm text-white block px-4 py-2 cursor-pointer">Logout</button>
+            </div>
+          </div>
         </div>
 
         <div class="pt-2">
@@ -128,6 +137,7 @@ export default {
   setup(){
 		const store = useStore();
     const loggedInUser = ref()
+    const toggleDropDown = ref(false)
 
 		const getUser = async () => {
 			let response = await axios.get('user')
@@ -137,9 +147,13 @@ export default {
       loggedInUser.value = response.data.data
 		}
 
+    const toggleNameDropDown = () => {
+      toggleDropDown.value = !toggleDropDown.value
+    }
+
 		onMounted(getUser())
 
-    return { getUser, loggedInUser }
+    return { getUser, loggedInUser, toggleDropDown, toggleNameDropDown, }
   }
 }
 </script>

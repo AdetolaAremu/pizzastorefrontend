@@ -53,7 +53,6 @@ export default {
       })
     }
 
-    // should use vuex for this
     const addToCart = async (pizza) => {
       await axios.post('carts', {
         pizza_id:pizza.id,
