@@ -2,7 +2,7 @@
   <Navbar />
   
   <div class="pt-56 pb-20 inset-0" v-if="countCartItems === 0">
-    <div class="flex h-full"> 
+    <div class="flex h-full">
       <div class="m-auto bg-gradient-to-tl from-gray-800 via-black to-gray-900 p-2 rounded shadow w-10/12 md:w-1/3">
         <div class="text-center my-5 text-white font-semibold">
           Cart is empty, <router-link to="/login" class="text-red-600">Log in</router-link> to add to cart
@@ -118,8 +118,9 @@ export default {
     const getGrandTotal = ref('')
     const city = ref('')
     const phone_number = ref('')
-    const address = ref('')
-    const auth_pay_link = ref('')
+    const address = ref('');
+    const auth_pay_link = ref('');
+    const loading = ref(false)
 
     const submitForPayment = async () => {
       await axios.post('/checkout-paystack', {
@@ -143,12 +144,15 @@ export default {
     }
 
     const getCartItems = async () => {
+      loading.value = true
+
       await axios.get('carts')
       .then((res) => {
-        console.log('data', res.data.data)
         cartItems.value = res.data.data
         getGrandTotal.value = res.data.data[0].grand_total
         store.dispatch('getCartCount', res.data.data[0].items.length)
+
+        loading.value = false
       }).catch((error) => {
         if(error.response){
           if (error.response.status === 500) {
@@ -162,7 +166,6 @@ export default {
 
     const emptyCart = async () => {
       await axios.delete('carts/empty')
-      // toast.success('Cart emptied successfully', { timeout:5000 })
     }
 
     const deleteCartItem = async (id) => {
@@ -172,7 +175,6 @@ export default {
         timeout:10000
       })
     }
-
 
     const countCartItems = computed(() =>  store.getters.getCartLength)
 
@@ -190,12 +192,34 @@ export default {
 
     return { cartItems, getCartItems, currentStep, inputQuantity, currentpage, nextpage, 
       previouspage, getGrandTotal, submitForPayment, city, phone_number, address, auth_pay_link, emptyCart,
-      deleteCartItem, countCartItems
+      deleteCartItem, countCartItems, loading
     }
   }
 }
 </script>
 
 <style>
+.loader {
+	border-top-color: #3498db;
+	-webkit-animation: spinner 1.5s linear infinite;
+	animation: spinner 1.5s linear infinite;
+}
 
+@-webkit-keyframes spinner {
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+	}
+}
+
+@keyframes spinner {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="bg-gradient-to-tl from-gray-800 via-black to-gray-900 w-full">
-    <div class="lg:px-32 py-10 flex justify-between">
+    <div class="lg:px-32 px-10 py-10 flex justify-between">
       <div>
         <div class="font-bold text-gray-500 text-xl">About Peeza</div>
         <div class="text-white lg:w-44 mt-5 font-semibold">
@@ -8,7 +8,7 @@
         </div>
       </div>
       <div>
-        <div class="font-bold text-gray-500 text-xl">Quicklinks</div>
+        <div class="font-bold text-gray-500 text-xl pr-4 lg:pr-0">Quicklinks</div>
         <div class="text-white lg:w-44 mt-5">
           <a href="" class="font-semibold">Home</a>
         </div>

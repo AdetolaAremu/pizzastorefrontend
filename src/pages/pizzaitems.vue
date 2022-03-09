@@ -13,14 +13,18 @@
       </select>
     </div>
 
-    <div class="grid grid-cols-3 mb-10">
+    <div v-if="loading === true" wire:loading class="overflow-hidden py-36 mt-3 opacity-75 flex flex-col items-center justify-center">
+      <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-36 w-36 mb-4"></div>
+    </div>
+
+    <div class="grid grid-cols-3 mb-10" v-if="loading === false">
       <div class="flex mt-2" v-for="(pizza, index) in pizzaitems" :key="index">
         <img class="h-60 w-48" src="../assets/images/pizza-2.jpg" alt="">
         <div class=" bg-gradient-to-tl from-gray-800 via-black to-gray-900 h-60 w-52">
           <div class="font-semibold text-lg text-center mt-3 mb-2 text-white">{{ pizza.name }}</div>
           <div class="px-3 text-gray-400">{{ pizza.description }}</div>
           <div class="mt-5 flex justify-between px-3">
-            <div class="text-yellow-700 font-bold text-lg">{{ pizza.price }}</div>
+            <div class="text-yellow-700 font-bold text-lg"><span class="text-sm">#</span>{{ pizza.price }}</div>
             <button class="bg-red-700 text-white rounded-full py-1 px-3" @click="addToCart(pizza)">Add to cart</button>
           </div>
         </div>
@@ -38,6 +42,7 @@ import axios from 'axios';
 import { onMounted } from '@vue/runtime-core';
 import { useToast } from 'vue-toastification'
 import { useStore } from 'vuex';
+
 export default {
   components:{ Navbar, Footer },
   setup(){
@@ -45,11 +50,15 @@ export default {
     const currentPizzaId = ref('')
     const toast = useToast()
     const store = useStore()
+    const loading = ref(false)
 
     const getAllPizzas = async () => {
+      loading.value = true
       await axios.get('all-pizzas')
       .then((response) => {
         pizzaitems.value = response.data.data
+
+      loading.value = false
       })
     }
 
@@ -76,11 +85,34 @@ export default {
 
     onMounted(getAllPizzas())
 
-    return { pizzaitems, getAllPizzas, addToCart, currentPizzaId }
+    return { pizzaitems, getAllPizzas, addToCart, currentPizzaId, loading }
   }
 }
+
 </script>
 
 <style>
+.loader {
+	border-top-color: #3498db;
+	-webkit-animation: spinner 1.5s linear infinite;
+	animation: spinner 1.5s linear infinite;
+}
 
+@-webkit-keyframes spinner {
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+	}
+}
+
+@keyframes spinner {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
 </style>

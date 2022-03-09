@@ -7,10 +7,11 @@ import OrderHistory from '../Private/dashboard/order-history.vue';
 import Profile from '../Private/dashboard/profile.vue';
 import Cart from '../pages/cart.vue';
 import paymentsuccess from '../pages/paymentsuccess.vue';
+import getOrder from '../Private/dashboard/getOrder.vue';
 import Register from '../pages/register.vue';
 import Login from '../pages/login.vue';
 
-const isLoggedIn = () => {
+export const isLoggedIn = () => {
   return localStorage.getItem('token')
 }
 
@@ -35,7 +36,8 @@ const routes = [
     [
       {path:"/user/dashboard", component:DashboardHome},
       {path:"/user/order-history", component:OrderHistory},
-      {path:"/user/profile", component:Profile}
+      {path:"/user/profile", component:Profile},
+      {path:"/user/order/:id", component:getOrder}
     ]
   }
 ]

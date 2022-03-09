@@ -24,7 +24,8 @@
             </div>
           </div>
           <div class="text-center">
-            <button class="bg-green-600 text-white font-bold rounded px-5 py-3 mb-3 hover:bg-green-800">Submit</button>
+            <button v-if="loading === false" class="bg-green-600 text-white font-bold rounded px-5 py-3 mb-3 hover:bg-green-800">Submit</button>
+            <button v-if="loading === true" class="bg-green-600 text-white font-bold rounded px-5 py-3 mb-3 hover:bg-green-800">Submitting...</button>
           </div>
         </form>
       </div>
@@ -51,8 +52,10 @@ export default {
     const toast = useToast()
     const router = useRouter()
     const store = useStore()
+    const loading = ref(false)
 
     const loginUser = async () => {
+        loading.value = true
         await axios.post('login', {
         email:email.value,
         password:password.value,
@@ -64,6 +67,7 @@ export default {
         toast.success("Login successful", {
           timeout: 10000
         });
+        loading.value = false
       }).catch((error) => {
         if (error.response) {
           if(error.response.status === 422){
@@ -75,9 +79,10 @@ export default {
             });
           }
         }
+        loading.value = false
       })
     }
-    return {email, password, loginUser, validationErrors, toast}
+    return {email, password, loginUser, validationErrors, toast, loading}
   }
 }
 </script>

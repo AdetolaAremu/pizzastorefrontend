@@ -1,6 +1,6 @@
 <template>
   <div class="font-sans antialiased" id="app">
-    <nav class="flex items-center justify-between flex-wrap text-white bg-black p-6 absolute w-full">
+    <nav class="flex items-center justify-between flex-wrap text-white bg-black z-50 p-6 absolute w-full">
       <div class="flex items-center flex-no-shrink">
         <svg class="fill-current h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"/></svg>
         <span class="font-semibold text-xl tracking-tight">Peeza</span>
@@ -38,16 +38,13 @@
           </router-link>
           <router-link to="/register" class="no-underline bg-green-700 inline-block text-sm px-4 py-2 leading-none border rounded 
             text-white border-green-700 hover:border-transparent hover:text-teal hover:bg-green-900 mt-4 
-            sm:mt-0 mr-4"
-          >Sign Up</router-link>
+            sm:mt-0 mr-4" v-if="$store.state.isAuthenticated===false">Sign Up</router-link>
           <router-link to="/login" class="no-underline inline-block text-sm px-4 py-2 leading-none border rounded 
             text-white border-black hover:border-transparent hover:text-teal hover:border-white mt-4 
-            sm:mt-0"
-          >Sign In</router-link>
-           <!-- <router-link to="/user/dashboard" class="no-underline bg-green-700 inline-block text-sm px-4 py-2 leading-none border rounded 
-            text-white border-green-700 hover:border-transparent hover:text-teal hover:bg-green-900 mt-4 
-            sm:mt-0 mr-4"
-          >Dashboard</router-link> -->
+            sm:mt-0" v-if="$store.state.isAuthenticated===false">Sign In</router-link>
+          <router-link to="/user/dashboard" class="no-underline inline-block text-sm px-4 py-2 leading-none border rounded 
+            text-white border-black hover:text-teal hover:bg-green-800 mt-4 
+            sm:mt-0 bg-green-700" v-if="$store.state.isAuthenticated===true">Dashboard</router-link>
         </div>
       </div>
     </nav>

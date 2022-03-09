@@ -1,5 +1,6 @@
-import { createStore } from 'vuex'
-import axios from 'axios'
+import { createStore } from 'vuex';
+import createPersistedState from "vuex-persistedstate";
+import axios from 'axios';
 
 export default createStore({
   state: {
@@ -8,6 +9,7 @@ export default createStore({
     cartCount:0,
     cartItems:null
   },
+  plugins: [createPersistedState()],
   mutations: {
     GET_CURRENT_USER(state, user){
       state.user = user
@@ -24,9 +26,12 @@ export default createStore({
   },
   actions: {
     getCurrentUser: ({commit}, user) => commit('GET_CURRENT_USER', user),
+
     getCartCount: ({commit}, cartCount) => commit('GET_CART_COUNT', cartCount),
+
     changeAuthenticationToTrue: ({ commit }, isAuthenticated) => 
-      commit('SET_AUTHENTICATED', isAuthenticated === true),
+      commit('SET_AUTHENTICATED_TO_TRUE', isAuthenticated === true),
+      
     getCartItems ({ commit }) {
       axios.get('carts').then((response) => {
         commit('GET_CART_COUNT', response.data.data[0].items.length)
