@@ -8,6 +8,9 @@ import Profile from '../Private/dashboard/profile.vue';
 import Cart from '../pages/cart.vue';
 import paymentsuccess from '../pages/paymentsuccess.vue';
 import getOrder from '../Private/dashboard/getOrder.vue';
+import PostPizza from '../Private/dashboard/postpizza.vue';
+import AllPizzas from '../Private/dashboard/allpizza.vue';
+import editPizza from '../Private/dashboard/editpizza.vue';
 import Register from '../pages/register.vue';
 import Login from '../pages/login.vue';
 
@@ -37,7 +40,10 @@ const routes = [
       {path:"/user/dashboard", component:DashboardHome},
       {path:"/user/order-history", component:OrderHistory},
       {path:"/user/profile", component:Profile},
-      {path:"/user/order/:id", component:getOrder}
+      {path:"/user/order/:id", component:getOrder},
+      {path:"/user/post-pizza",  component:PostPizza},
+      {path:"/user/all-pizzas",  component:AllPizzas},
+      {path:"/user/edit-pizza/:id",  component:editPizza}
     ]
   }
 ]

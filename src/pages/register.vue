@@ -95,7 +95,6 @@ export default {
         if(error.response.status === 422){
           // console.log('error here', error.response.data.errors)
           validationErrors.value =  error.response.data.errors
-          console.log('validate', validationErrors.value.first_name)
         }
       })
     }

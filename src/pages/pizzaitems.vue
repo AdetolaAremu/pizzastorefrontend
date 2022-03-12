@@ -2,15 +2,10 @@
   <Navbar />
   <div class="pt-24 px-16">
     
-    <div class="flex justify-between">
+    <div class="">
       <input type="text" placeholder="Input search text here e.g french pizza" 
-        class="border-2 border-purple-500 py-2 rounded-md w-72 mb-3"
+        class="border-2 border-purple-500 py-2 rounded-md w-72 mb-3" @keyup="filterProduct($event.target.value)"
       >
-      <select name="" class="border-2 border-purple-500 rounded-md w-72">
-        <option disabled selected>Select Order</option>
-        <option>Order by Highest Pizza Price</option>
-        <option>Order by Lowest Pizza Price</option>
-      </select>
     </div>
 
     <div v-if="loading === true" wire:loading class="overflow-hidden py-36 mt-3 opacity-75 flex flex-col items-center justify-center">
@@ -35,6 +30,7 @@
 </template>
 
 <script>
+
 import Navbar from '../components/publicnavbar.vue';
 import Footer from '../components/publicfooter.vue';
 import { ref } from '@vue/reactivity';
@@ -42,6 +38,7 @@ import axios from 'axios';
 import { onMounted } from '@vue/runtime-core';
 import { useToast } from 'vue-toastification'
 import { useStore } from 'vuex';
+import debounce from "lodash/debounce"
 
 export default {
   components:{ Navbar, Footer },
@@ -51,16 +48,21 @@ export default {
     const toast = useToast()
     const store = useStore()
     const loading = ref(false)
+    const searchProduct = ref('')
 
-    const getAllPizzas = async () => {
+    const getAllPizzas = async (text = '') => {
       loading.value = true
-      await axios.get('all-pizzas')
-      .then((response) => {
-        pizzaitems.value = response.data.data
+
+      const response  = await axios.get(`all-pizzas?s=${text}`)
+      
+      pizzaitems.value = response.data
 
       loading.value = false
-      })
     }
+
+    const filterProduct = debounce((text) => {
+       getAllPizzas(text)
+    }, 800)
 
     const addToCart = async (pizza) => {
       await axios.post('carts', {
@@ -83,9 +85,9 @@ export default {
       })
     }
 
-    onMounted(getAllPizzas())
+    onMounted(async () => await getAllPizzas())
 
-    return { pizzaitems, getAllPizzas, addToCart, currentPizzaId, loading }
+    return { pizzaitems, getAllPizzas, addToCart, currentPizzaId, loading, searchProduct, filterProduct }
   }
 }
 
