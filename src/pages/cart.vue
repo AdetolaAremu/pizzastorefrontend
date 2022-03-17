@@ -1,7 +1,7 @@
 <template>
   <Navbar />
   
-  <div class="pt-56 pb-20 inset-0" v-if="countCartItems === 0">
+  <div class="pt-56 pb-20 inset-0" v-if="countCartItems === 0 && loading === false">
     <div class="flex h-full">
       <div class="m-auto bg-gradient-to-tl from-gray-800 via-black to-gray-900 p-2 rounded shadow w-10/12 md:w-1/3">
         <div class="text-center my-5 text-white font-semibold">
@@ -9,6 +9,11 @@
         </div>
       </div>
     </div>
+  </div>
+
+  
+  <div v-if="loading === true" wire:loading class="overflow-hidden py-36 mt-3 opacity-75 flex flex-col items-center justify-center">
+    <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-36 w-36 mb-4"></div>
   </div>
 
   <div class="mb-3" v-for="pizza in cartItems" :key="pizza" v-show="currentpage === 0">
@@ -53,46 +58,47 @@
       </button>
     </div>
   </div>
-
-  <div class="pt-32 pb-20" v-show="currentpage === 1">
-    <div class="font-bold text-center text-xl mb-3">Checkout</div>
-    <div class="flex justify-center">
-      <form @submit.prevent="submitForPayment" class="bg-gradient-to-tl from-gray-800 via-black to-gray-900 w-2/5 shadow-2xl py-3 rounded-lg">
-        <div class="w-full px-3">
-          <label class="block text-white uppercase tracking-wide text-xs font-bold mb-2" for="grid-last-name">
-            Address
-          </label>
-          <input v-model="address" class="appearance-none block w-full rounded-md py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Enter Address">
-          <!-- <div class="text-red-600 text-sm " v-if="validationErrors.password">{{ validationErrors.password[0] }}</div> -->
-        </div>
-        <div class="w-full px-3 mt-4">
-          <label class="block text-white uppercase tracking-wide text-xs font-bold mb-2" for="grid-last-name">
-            Phone Number
-          </label>
-          <input v-model="phone_number" class="appearance-none block w-full rounded-md py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Enter Address">
-          <!-- <div class="text-red-600 text-sm " v-if="validationErrors.password">{{ validationErrors.password[0] }}</div> -->
-        </div>
-        <div class="w-full px-3 mt-4">
-          <label class="block text-white uppercase tracking-wide text-xs font-bold mb-2" for="grid-last-name">
-            City <span class="text-red">*</span>
-          </label>
-          <input v-model="city" class="appearance-none block w-full rounded-md py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Enter Address">
-          <!-- <div class="text-red-600 text-sm " v-if="validationErrors.password">{{ validationErrors.password[0] }}</div> -->
-        </div>
-        <div class="w-full px-3 mt-4 text-center">
-          <label class="block text-white uppercase tracking-wide text-xs font-bold mb-2" for="grid-last-name">
-            Total Amount to be paid
-          </label>
-          <div class="text-white font-bold text-xl">
-            NGN {{ getGrandTotal }}
+  <div v-if="loading === false">
+    <div class="pt-32 pb-20" v-show="currentpage === 1">
+      <div class="font-bold text-center text-xl mb-3">Checkout</div>
+      <div class="flex justify-center">
+        <form @submit.prevent="submitForPayment" class="bg-gradient-to-tl from-gray-800 via-black to-gray-900 w-2/5 shadow-2xl py-3 rounded-lg">
+          <div class="w-full px-3">
+            <label class="block text-white uppercase tracking-wide text-xs font-bold mb-2" for="grid-last-name">
+              Address
+            </label>
+            <input v-model="address" class="appearance-none block w-full rounded-md py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Enter Address">
+            <!-- <div class="text-red-600 text-sm " v-if="validationErrors.password">{{ validationErrors.password[0] }}</div> -->
           </div>
-          
-          <!-- <div class="text-red-600 text-sm " v-if="validationErrors.password">{{ validationErrors.password[0] }}</div> -->
-        </div>
-        <div class="mt-4 text-center">
-          <button class="text-white bg-green-600 rounded-md px-3 py-2">Proceed to pay</button>
-        </div>
-      </form>
+          <div class="w-full px-3 mt-4">
+            <label class="block text-white uppercase tracking-wide text-xs font-bold mb-2" for="grid-last-name">
+              Phone Number
+            </label>
+            <input v-model="phone_number" class="appearance-none block w-full rounded-md py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Enter Address">
+            <!-- <div class="text-red-600 text-sm " v-if="validationErrors.password">{{ validationErrors.password[0] }}</div> -->
+          </div>
+          <div class="w-full px-3 mt-4">
+            <label class="block text-white uppercase tracking-wide text-xs font-bold mb-2" for="grid-last-name">
+              City <span class="text-red">*</span>
+            </label>
+            <input v-model="city" class="appearance-none block w-full rounded-md py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="Enter Address">
+            <!-- <div class="text-red-600 text-sm " v-if="validationErrors.password">{{ validationErrors.password[0] }}</div> -->
+          </div>
+          <div class="w-full px-3 mt-4 text-center">
+            <label class="block text-white uppercase tracking-wide text-xs font-bold mb-2" for="grid-last-name">
+              Total Amount to be paid
+            </label>
+            <div class="text-white font-bold text-xl">
+              NGN {{ getGrandTotal }}
+            </div>
+            
+            <!-- <div class="text-red-600 text-sm " v-if="validationErrors.password">{{ validationErrors.password[0] }}</div> -->
+          </div>
+          <div class="mt-4 text-center">
+            <button class="text-white bg-green-600 rounded-md px-3 py-2">Proceed to pay</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
   

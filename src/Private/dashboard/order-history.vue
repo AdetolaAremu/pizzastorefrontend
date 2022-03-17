@@ -11,6 +11,7 @@
           <th>Actions</th>
         </tr>
       </thead>
+       <!-- v-if="orders.length === 4 ? orders.slice(): orders" -->
       <tbody class="text-center">
         <tr v-for="(order, index) in orders" :key='index.id'>
           <td>{{ index + 1 }}</td>
@@ -21,6 +22,9 @@
         </tr>
       </tbody>
     </table>
+
+    <div v-if="orders < 0 && loading === false" class="text-center my-3">No content to display</div>
+
     <div v-if="loading === true" wire:loading class="overflow-hidden mt-3 opacity-75 flex flex-col items-center justify-center">
       <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
     </div>

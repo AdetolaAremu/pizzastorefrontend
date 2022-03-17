@@ -68,6 +68,7 @@ import Navbar from '../components/publicnavbar.vue';
 import { ref } from '@vue/reactivity';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import { useToast } from 'vue-toastification';
 
 export default {
   components: {Navbar},
@@ -80,6 +81,7 @@ export default {
     const confirm_password = ref('');
     const router = useRouter('');
     const validationErrors = ref('');
+    const toast = useToast()
 
     const registerUser = async () => {
       axios.post('register', {
@@ -90,10 +92,10 @@ export default {
         password:password.value,
         confirm_password:confirm_password.value
       }).then(() => {
-        router.push('/')
+        router.push('/login')
+        toast.success('Registration successful, you may now login', { timeout:10000 })
       }).catch((error) => {
         if(error.response.status === 422){
-          // console.log('error here', error.response.data.errors)
           validationErrors.value =  error.response.data.errors
         }
       })
