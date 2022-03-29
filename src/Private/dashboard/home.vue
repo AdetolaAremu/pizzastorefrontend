@@ -21,7 +21,7 @@
         </tr>
       </tbody>
     </table>
-    <div v-if="fiveorders < 0 && loading === false" class="text-center my-3">No content to display</div>
+    <div v-if="fiveorders.length === 0 && loading === false" class="text-center font-semibold my-3">No content to display</div>
     
     <div v-if="loading === true" wire:loading class="overflow-hidden mt-3 opacity-75 flex flex-col items-center justify-center">
       <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>

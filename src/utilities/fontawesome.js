@@ -10,7 +10,6 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faFrown } from "@fortawesome/free-solid-svg-icons";
 
-
 library.add(faPhone);
 library.add(faUser);
 library.add(faCheckCircle);

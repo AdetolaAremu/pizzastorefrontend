@@ -2,7 +2,7 @@
   <div>
     <div class="bg-white mt-9 rounded-md">
       <div class="text-center py-3">Create new product</div>
-      <form @submit.prevent="createPizza" class="px-8 py-4">
+      <form id="theform" @submit.prevent="createPizza" class="px-8 py-4">
         <div class="grid grid-cols-1 lg:grid-cols-2">
           <div class="mt-2">
             <input v-model="name" type="text" class="py-2 rounded w-100 lg:w-96 border border-blue-700" placeholder="Product Name">
@@ -22,8 +22,8 @@
             <div class="text-red-600 text-sm " v-if="validationErrors.variant_id">{{ validationErrors.variant_id[0] }}</div>
           </div>
           <div class="mt-2">
-            <input type="file" class="rounded w-100 lg:w-96 border border-blue-700" placeholder="Product Price">
-            <div class="text-red-600 text-sm " v-if="validationErrors.price">{{ validationErrors.price[0] }}</div>
+            <input type="file" @change="handleImageUpload" class="rounded w-100 lg:w-96 border border-blue-700">
+            <div class="text-red-600 text-sm " v-if="validationErrors.image">{{ validationErrors.image[0] }}</div>
           </div>
         </div>
         <div class="mt-3">
@@ -52,22 +52,39 @@ export default {
     const description = ref('');
     const price = ref('');
     const variant_id = ref('');
+    const image = ref('');
     const toast = useToast();
     const router = useRouter()
     const validationErrors = ref('')
     const loading = ref(false)
 
+    const handleImageUpload = (e) => {
+      image.value = e.target.files[0]
+      console.log(image.value, 'image')
+    }
+
     const createPizza = async () => {
+      let formData = new FormData()
+
+      formData.append('image', image.value)
+      formData.append('description', description.value)
+      formData.append('price', price.value)
+      formData.append('variant_id', variant_id.value)
+      formData.append('name', name.value)
+
       loading.value = true
-      await axios.post('/pizzas', {
-        name:name.value,
-        description:description.value,
-        price:price.value,
-        variant_id:variant_id.value
-      }).then(() => {
+      
+      await axios.post('/pizzas', formData
+        // name:name.value,
+        // description:description.value,
+        // price:price.value,
+        // variant_id:variant_id.value,
+        // image:image.value
+        
+      ).then(() => {
         router.push('/user/all-pizzas')
         loading.value = false
-        toast.success('Pizza created successfully', { timeout:10000 })
+        toast.success('Pizza created successfully', { timeout:5000 })
       }).catch((error) => {
         if (error.response) {
           if (error.response.status == 422) {
@@ -76,9 +93,9 @@ export default {
             })
             validationErrors.value = error.response.data.errors
           }
-          if(error.response.status == 400) {
-             toast.error('Current password is incorrect', {
-              timeout:10000
+          else {
+             toast.error('An error occured, please retry', {
+              timeout:5000
             })
           }
           loading.value = false
@@ -91,7 +108,9 @@ export default {
       getVariants.value = response.data.data
     })
 
-    return { getVariants, name, description, price, variant_id, createPizza, validationErrors, loading }
+    return { getVariants, name, description, price, variant_id, createPizza, validationErrors, 
+      loading, handleImageUpload, image 
+    }
   }
 }
 </script>

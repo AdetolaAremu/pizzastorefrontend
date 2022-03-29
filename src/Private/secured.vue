@@ -27,9 +27,11 @@
     <aside id="sidebar" class="bg-gray-800 text-gray-100 md:w-64 w-3/4 space-y-6 pt-6 px-0 absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out  md:flex md:flex-col md:justify-between overflow-y-auto z-20" data-dev-hint="sidebar; px-0 for frameless; px-2 for visually inset the navigation">
       <div class="flex flex-col space-y-6" data-dev-hint="optional div for having an extra footer navigation">
         <router-link to="/" class="text-white flex items-center space-x-2 px-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-          </svg>
+          </svg> -->
+          <!-- <font-awesome-icon icon="pizza-slice" /> -->
+          <img src="../assets/images/topicon.png" alt="top" style="height:30px">
           <span class="text-2xl font-extrabold whitespace-nowrap truncate">Peeza </span>
         </router-link>
         <nav data-dev-hint="main navigation">
@@ -100,8 +102,7 @@
           <div class="text-lg">Home</div>
           <div class="relative">
             <a href="#" class="no-underline text-lg px-4 py-1 leading-none
-             -ml-4 sm:mt-0 flex" @click="toggleNameDropDown"
-            >
+             -ml-4 sm:mt-0 flex" @click="toggleNameDropDown" ref="targetToggle">
               Hi, {{ loggedInUser?.first_name }}
               <svg style="margin-top:2px" class="w-6 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" 
                 xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" 
@@ -169,7 +170,8 @@
 import Footer from '../components/publicfooter.vue';
 import axios from 'axios';
 import { onMounted, ref } from '@vue/runtime-core';
-import { useStore } from 'vuex'
+import { useStore } from 'vuex';
+import { onClickOutside } from '@vueuse/core'
 export default {
   components:{ Footer },
   setup(){
@@ -177,6 +179,9 @@ export default {
     const loggedInUser = ref()
     const toggleDropDown = ref(false)
     const stats = ref('')
+    const targetToggle = ref(null)
+
+    onClickOutside(targetToggle, () => {toggleDropDown.value = false})
 
 		const getUser = async () => {
 			let response = await axios.get('user')
@@ -184,8 +189,6 @@ export default {
 			await store.dispatch('getCurrentUser', response.data.data)
 
       loggedInUser.value = response.data.data
-
-      console.log('current', response.data.data)
 		}
 
     const toggleNameDropDown = () => {
@@ -205,7 +208,7 @@ export default {
 
 		onMounted(getUser(), getDashboard())
 
-    return { getUser, loggedInUser, toggleDropDown, toggleNameDropDown, getDashboard, stats, logout}
+    return { getUser, loggedInUser, toggleDropDown, toggleNameDropDown, getDashboard, stats, logout, targetToggle}
   }
 }
 </script>

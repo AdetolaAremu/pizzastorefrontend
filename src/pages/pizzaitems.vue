@@ -1,26 +1,25 @@
 <template>
   <Navbar />
-  <div class="pt-24 px-16">
+  <div class="pt-24 px-8 lg:px-16">
     
     <div class="">
       <input type="text" placeholder="Input search text here e.g french pizza" 
-        class="border-2 border-purple-500 py-2 rounded-md w-72 mb-3" @keyup="filterProduct($event.target.value)"
-      >
+        class="border-2 border-purple-500 py-2 rounded-md w-72 mb-3" @keyup="filterProduct($event.target.value)">
     </div>
 
     <div v-if="loading === true" wire:loading class="overflow-hidden py-36 mt-3 opacity-75 flex flex-col items-center justify-center">
       <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-36 w-36 mb-4"></div>
     </div>
 
-    <div class="grid grid-cols-3 mb-10" v-if="loading === false">
-      <div class="flex mt-2" v-for="(pizza, index) in pizzaitems" :key="index">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 mb-10" v-if="loading === false">
+      <div class="flex mt-2 mr-0 md:mr-2" v-for="(pizza, index) in pizzaitems" :key="index">
         <img class="h-60 w-48" src="../assets/images/pizza-2.jpg" alt="">
         <div class=" bg-gradient-to-tl from-gray-800 via-black to-gray-900 h-60 w-52">
           <div class="font-semibold text-lg text-center mt-3 mb-2 text-white">{{ pizza.name }}</div>
-          <div class="px-3 text-gray-400">{{ pizza.description }}</div>
-          <div class="mt-5 flex justify-between px-3">
-            <div class="text-yellow-700 font-bold text-lg"><span class="text-sm">#</span>{{ pizza.price }}</div>
-            <button v-if="$store.state.isAuthenticated===true" class="bg-red-700 text-white rounded-full py-1 px-3" @click="addToCart(pizza) && checkIDFromDatabase(index)">Add to cart</button>
+          <div class="px-3 text-gray-400 text-xs md:text-base lg:text-base">{{ pizza.description }}</div>
+          <div class="mt-5 flex justify-between flex-col md:flex-row lg:flex-row px-3">
+            <div class="text-yellow-700 font-bold text-sm lg:text-lg"><span class="text-xs lg:text-sm">#</span>{{ pizza.price }}</div>
+            <button v-if="$store.state.isAuthenticated===true" class="bg-red-700 text-white rounded-full py-1 px-3 hover:bg-white hover:text-red-700 text-xs lg:text-base" @click="addToCart(pizza)">Add to cart</button>
             <button v-if="$store.state.isAuthenticated===false" @click="active = true" class="bg-red-700 text-white rounded-full py-1 px-3 hover:bg-white hover:text-red-700">Add to cart</button>
           </div>
         </div>
@@ -116,23 +115,22 @@ export default {
         toast.success((res.data.message), {
           timeout:3000
         })
+
       }).catch((error) => {
         if (error.response) {
           if(error.response.status === 422){
             toast.info("Pizza item is in your cart already!", {
-              timeout:5000
+              timeout:3000
             })
           }
         }
       })
+      checkIDFromDatabase(pizza.id)
     }
 
     const checkIDFromDatabase = async (id) => {
-      const response = axios.get(`/carts/check/${id}`)
+      const response = await axios.get(`/carts/check/${id}`)
       runCheck.value = response.data
-      // in the template, if it returns true then remove cart should show
-
-      console.log('iddd', id)
     }
 
     onMounted(async () => await getAllPizzas())

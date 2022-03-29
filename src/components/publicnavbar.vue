@@ -1,17 +1,19 @@
 <template>
   <div class="font-sans antialiased" id="app">
-    <nav class="flex items-center justify-between flex-wrap text-white bg-black z-50 p-6 absolute w-full">
-      <div class="flex items-center flex-no-shrink">
-        <svg class="fill-current h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"/></svg>
-        <span class="font-semibold text-xl tracking-tight">Peeza</span>
-      </div>
+    <nav class="flex items-center justify-between flex-wrap text-white bg-black z-50 p-6 absolute 
+      w-full lg:px-20 md:px-3 px-3"
+    >
+      <router-link to="/" class="flex items-center flex-no-shrink">
+        <img src="../assets/images/topicon.png" alt="top" style="height:30px">
+        <span class="font-semibold text-xl ml-2 tracking-tight">Peeza</span>
+      </router-link>
       <div class="block sm:hidden">
         <button @click="toggleNav" class="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-white">
           <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
         </button>
       </div>
       <div :class="opened ? 'block': 'hidden'" class="w-full z-50 flex-grow sm:flex sm:items-center sm:w-auto">
-        <div class="text-sm sm:flex-grow lg:text-center">
+        <div class="text-sm sm:flex-grow md:text-center lg:text-center">
           <router-link to="/" class="no-underline block mt-4 text-lg sm:inline-block sm:mt-0 text-teal-lighter hover:text-white mr-4">
             Home
           </router-link>
@@ -24,7 +26,7 @@
         </div>
         <div>
           <router-link to="/cart" class="no-underline block text-lg sm:inline-block sm:mt-0 text-teal-lighter 
-            hover:text-white lg:pr-5"
+            hover:text-white md:pr-5 lg:pr-5"
           >
             <svg class="w-6 h-6 lg:pt-2 relative" fill="none" stroke="currentColor" viewBox="0 0 24 22" 
               xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" 
@@ -32,7 +34,7 @@
               1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
               </path>
             </svg>
-            <span class="absolute text-xs bg-red-600 text-white p-1 lg:top-4 rounded-full lg:ml-3">
+            <span class="absolute text-xs bg-red-600 text-white p-1 top-48 md:top-4 ml-5 lg:top-4 rounded-full lg:ml-3">
               {{ countCartItems }}
             </span>
           </router-link>
