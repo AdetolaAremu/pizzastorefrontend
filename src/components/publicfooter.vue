@@ -10,10 +10,10 @@
       <div class="pt-3 lg:pt-0">
         <div class="font-bold text-gray-500 text-xl pr-4 lg:pr-0">Quicklinks</div>
         <div class="text-white lg:w-44 mt-5">
-          <a href="" class="font-semibold">Home</a>
+          <router-link to="/" class="font-semibold">Home</router-link>
         </div>
         <div class="text-white lg:w-44 mt-1">
-          <a href="" class="font-semibold">Store</a>
+          <router-link to="/store" class="font-semibold">Store</router-link>
         </div>
          <div class="text-white lg:w-44 mt-1">
           <a href="" class="font-semibold">GitHub</a>
