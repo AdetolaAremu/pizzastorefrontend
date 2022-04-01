@@ -5,7 +5,7 @@
       <div v-if="loading === true" wire:loading class="overflow-hidden py-36 mt-3 opacity-75 flex flex-col items-center justify-center">
         <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-36 w-36 mb-4"></div>
       </div>
-      <form @submit.prevent="updatePizza" class="px-8 py-4">
+      <form  v-if="crudLoading === false" @submit.prevent="updatePizza" class="px-8 py-4">
         <div class="flex justify-between">
           <div>
             <input v-model="name" type="text" class="py-2 rounded lg:w-96 border border-blue-700" placeholder="Product Name">
@@ -23,7 +23,6 @@
               <option v-for="variants in getVariants" :key="variants.id" :value="variants.id">{{ variants.name }}</option>
             </select>
             <div class="text-red-600 text-sm " v-if="validationErrors.variant_id">{{ validationErrors.variant_id[0] }}</div>
-            
           </div>
           <div>
             <input type="file" class="rounded lg:w-96 border border-blue-700" placeholder="Product Price">

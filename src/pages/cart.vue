@@ -136,7 +136,7 @@ export default {
        auth_pay_link.value = res.data.data.authorization_url
        window.location.href = auth_pay_link.value;
        emptyCart()
-      //  getCartItems()
+       getCartItems()
       }).catch((error) => {
         if(error.res){
           if (error.response.status === 500) {
@@ -171,6 +171,7 @@ export default {
 
     const emptyCart = async () => {
       await axios.delete('carts/empty')
+      store.dispatch('getCartCount')
     }
 
     const deleteCartItem = async (id) => {
