@@ -45,7 +45,6 @@ export default {
       loading.value = true
       const response = await axios.get('orders/last-five-orders')
       fiveorders.value = response.data
-      console.log('five',  )
 
       loading.value = false
     }

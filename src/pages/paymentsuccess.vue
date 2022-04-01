@@ -19,21 +19,24 @@
 import { onMounted } from '@vue/runtime-core';
 import { useRoute } from "vue-router";
 import axios from 'axios'
+import { useStore } from 'vuex';
 export default {
   setup(){
     const route = useRoute();
+    const store = useStore();
 
     const finalize = async () => {
       await axios.get(`/finalize_payment`)
     }
 
-    const test = () => {
-      console.log('hey', route.query.trxref)
+    const emptyCart = async () => {
+      await axios.delete('carts/empty')
+      store.dispatch('getCartCount')
     }
 
-    onMounted(() => finalize())
+    onMounted(async () => finalize(), emptyCart())
 
-    return { route, test, finalize }
+    return { route, finalize, emptyCart }
   }
 }
 </script>

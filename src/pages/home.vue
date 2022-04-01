@@ -31,12 +31,18 @@
       <span class="text-red-500">variants</span>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 px-10 lg:px-1">
+    <div v-if="loading === true">
+      <div v-if="loading === true" wire:loading class="overflow-hidden py-5 mt-3 opacity-75 flex flex-col items-center justify-center">
+        <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-16 w-16 mb-4"></div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 px-5 lg:px-1 smallerscreen">
       <div class="flex mt-2" v-for="(pizza, index) in pizzaitems" :key="index">
-        <img class="h-60 w-48" src="../assets/images/bg_1.png" alt="">
+        <img class="h-60 w-48" :src="pizza.images.main" alt="">
         <div class=" bg-gradient-to-tl from-gray-800 via-black to-gray-900 h-60 w-48">
-          <div class="font-semibold text-lg text-center mt-3 mb-2 text-white">{{ pizza.name }}</div>
-          <div class="px-3 text-gray-400 text-xs md:text-base lg:text-base">{{ pizza.description }}</div>
+          <div class="font-semibold text-lg text-center mt-3 mb-2 text-white smalltitle">{{ pizza.name }}</div>
+          <div class="px-3 text-gray-400 text-xs md:text-base lg:text-base textverysmall">{{ pizza.description }}</div>
           <div class="mt-5 flex justify-between flex-col md:flex-row lg:flex-row px-3">
             <div class="text-yellow-700 font-bold text-lg -mt-6 md:-mt-0 lg:-mt-0"><span class="text-xs lg:text-sm">#</span>{{ pizza.price }}</div>
             <button v-if="$store.state.isAuthenticated===true" class="bg-red-700 text-white rounded-full py-1 px-3 hover:bg-white hover:text-red-700 text-xs lg:text-base" @click="addToCart(pizza)">Add to cart</button>
@@ -92,34 +98,35 @@
         <div class="flex justify-center"><img src="https://img.icons8.com/officel/80/000000/scooter.png"/></div>
         <div class="text-gray-400 text-3xl my-12 font-semibold">Fast Delivery</div>
         <div class="text-white">
-          This the best and most healthy food you will get bla bla <br>
-          bla bla and we say jagba jangantis and say <br> yes and yes just to say yes
+          We deliver pizza to your doorstep with lightening speed,<br>
+          maybe not lightening speed, but you get the point. Give us <br>a
+          try and you will absolutely love our service.
         </div>
       </div>
 
       <div class="text-center hover:bg-gray-900 py-2 cursor-pointer">
         <div class="flex justify-center"><img class="" src="https://img.icons8.com/external-konkapp-flat-konkapp/80/000000/external-pizza-seafood-konkapp-flat-konkapp.png"/></div>
-        <div class="text-gray-400 text-3xl my-12 font-semibold">Fast Delivery</div>
+        <div class="text-gray-400 text-3xl my-12 font-semibold">Tasty Pizza</div>
         <div class="text-white">
-          This the best and most healthy food you will get bla bla <br>
-          bla bla and we say jagba jangantis and say <br> yes and yes just to say yes
+          we offer you the best and most tasty pizza, we have <br>varieties of
+          pizzas, you can choose from our menu and be assured of satisfaction<br>
         </div>
       </div>
 
       <div class="text-center hover:bg-gray-900 py-2 cursor-pointer" data-aos="fade-left">
         <div class="flex justify-center"><img src="https://img.icons8.com/external-victoruler-flat-gradient-victoruler/100/000000/external-time-food-and-delivery-victoruler-flat-gradient-victoruler.png"/></div>
-        <div class="text-gray-400 text-3xl mt-8 font-semibold">Fast Delivery</div>
+        <div class="text-gray-400 text-3xl mt-8 font-semibold">24/7 Customer Service</div>
         <div class="text-white" style="margin-top:44px">
-          This the best and most healthy food you will get bla bla <br>
-          bla bla and we say jagba jangantis and say <br> yes and yes just to say yes
+          We are always here to help you, if you have any questions or <br>
+          concerns, we are always here to help you. Our services run 24/7
         </div>
       </div>
     </div>
   </div>
 
-  <div class="flex justify-between lg:flex-row flex-col px-5 md:10 lg:px-32">
+  <div class="flex justify-between lg:flex-row md:flex-row flex-col px-5 md:10 lg:px-32">
     <div data-aos="fade-up">
-      <div class="text-6xl font-bold text-gray-800 mt-6">Our Customers <br> love what we do</div>
+      <div class="text-4xl lg:text-6xl font-bold text-gray-800 mt-6">Our Customers <br> love what we do</div>
       <div class="mt-10 font-semibold">We have served thousands of customers and<br> who have good things to say about us</div>
       <button class="border-gray-300 mt-10 w-64 rounded-md px-5 py-5 text-gray-800 shadow-2xl text-center font-bold hover:bg-red-700 hover:text-white border transition duration-300 ease-in-out delay-150 ">
         Read more success stories
@@ -128,18 +135,18 @@
 
     <div class="mb-6 pt-10 lg:pt-0">
       <div class="border border-gray-300 mb-3 shadow-2xl flex justify-between rounded w-80 lg:w-96 px-3 cursor-pointer
-        hover:scale-110 transform transition duration-500">
+        hover:scale-110 transform transition duration-500 reducewidth">
         <div class="py-2">
           <div class="text-5xl text-red-400">
             <font-awesome-icon icon="quote-left" />
           </div>
           <div>I got my pizza delivered to me within 30minutes, recommended.</div>
-          <div class="font-bold text-gray-800 text-lg">James Dan</div>
+          <div class="font-bold text-gray-800 text-lg">Bella Dan</div>
         </div>
-        <img class="h-20 mt-14 lg:mt-5 md:mt-5 rounded-full" src="../assets/images/bg_3.jpg" alt="">
+        <img class="h-20 mt-14 lg:mt-5 md:mt-5 rounded-full" src="../assets/images/testi.webp" alt="">
       </div>
       <div class="border border-gray-300 mb-3 shadow-2xl flex justify-between rounded w-80 lg:w-96 px-3 cursor-pointer
-        hover:scale-110 transform transition duration-500">
+        hover:scale-110 transform transition duration-500 reducewidth">
         <div class="py-2">
           <div class="text-5xl text-red-400">
             <font-awesome-icon icon="quote-left" />
@@ -147,10 +154,10 @@
           <div>I still can't believe I got a pizza this good in record time!</div>
           <div class="font-bold text-gray-800 text-lg">Bisi Jola</div>
         </div>
-        <img class="h-20 mt-14 lg:mt-5 md:mt-5 rounded-full" src="../assets/images/bg_3.jpg" alt="">
+        <img class="h-20 mt-14 lg:mt-5 md:mt-5 rounded-full" src="../assets/images/testi2.webp" alt="">
       </div>
       <div class="border border-gray-300 mb-3 shadow-2xl flex justify-between rounded w-80 lg:w-96 px-3 cursor-pointer
-        hover:scale-110 transform transition duration-500">
+        hover:scale-110 transform transition duration-500 reducewidth">
         <div class="py-2">
           <div class="text-5xl text-red-400">
             <font-awesome-icon icon="quote-left" />
@@ -158,7 +165,7 @@
           <div>The pizza tastes good, looks nice and also delivered fast.</div>
           <div class="font-bold text-gray-900 text-lg">Jessie Jay</div>
         </div>
-        <img class="h-20 mt-14 lg:mt-5 md:mt-5 rounded-full" src="../assets/images/bg_3.jpg" alt="">
+        <img class="h-20 mt-14 lg:mt-5 md:mt-5 rounded-full" src="../assets/images/testi3.webp" alt="">
       </div>
     </div>
   </div>
@@ -170,7 +177,6 @@ import Footer from '../components/publicfooter.vue';
 import { useStore } from 'vuex';
 import { useToast } from 'vue-toastification';
 import { ref } from '@vue/reactivity';
-// import debounce from "lodash/debounce"
 import axios from 'axios';
 import { onMounted } from '@vue/runtime-core';
 export default {
@@ -250,6 +256,25 @@ export default {
   -webkit-animation-delay: 2s;
   -moz-animation-delay: 2s;
   animation-delay: 2s;
+}
+
+@media screen and (max-width:300px) {
+  .smallerscreen {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .textverysmall {
+    font-size: 10px;
+  }
+
+  .smalltitle {
+    font-size: 12px;
+  }
+
+  .reducewidth {
+    width:16.7rem;
+  }
 }
 
 </style>

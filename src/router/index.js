@@ -21,8 +21,24 @@ export const isLoggedIn = () => {
 const routes = [
   {path:"/", component:Home},
   {path:"/store", component:PizzaItem},
-  {path:"/register", component:Register},
-  {path:"/login", component:Login},
+  {path:"/register", component:Register, 
+    beforeEnter: (to, from, next) => {
+      if(isLoggedIn()){
+        next('/user/dashboard')
+      }else{
+        next()
+      }
+    }
+  },
+  {path:"/login", component:Login, 
+    beforeEnter: (to, from, next) => {
+      if(isLoggedIn()){
+        next('/user/dashboard')
+      }else{
+        next()
+      }
+    }
+  },
   {path:"/cart", component:Cart},
   {path:"/payment-sucess", component:paymentsuccess},
   {

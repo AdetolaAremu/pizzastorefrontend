@@ -1,11 +1,11 @@
 <template>
   <Navbar />
   
-  <div class="pt-56 pb-20 inset-0" v-if="countCartItems === 0 && loading === false">
+  <div class="pt-72 pb-10 inset-0" v-if="countCartItems === 0 && loading === false">
     <div class="flex h-full">
       <div class="m-auto bg-gradient-to-tl from-gray-800 via-black to-gray-900 p-2 rounded shadow w-10/12 md:w-1/3">
         <div class="text-center my-5 text-white font-semibold">
-          Cart is empty, <router-link to="/login" class="text-red-600">Log in</router-link> to add to cart
+          Cart is empty, <span class="text-red-600">start adding to cart!</span>
         </div>
       </div>
     </div>
@@ -16,19 +16,18 @@
     <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-36 w-36 mb-4"></div>
   </div>
 
-  <div class="mb-3" v-for="pizza in cartItems" :key="pizza" v-show="currentpage === 0">
+  <div class="mb-20" v-for="pizza in cartItems" :key="pizza" v-show="currentpage === 0">
     <div class="pt-24 lg:px-16 grid lg:grid-cols-2 sm:grid-cols-1 md:grid-cols-1">
       <div class="flex justify-between bg-gray-100 py-2 px-3 rounded-md m-2 hover:bg-blue-200" 
-        v-for="thepizza in pizza.items" :key="thepizza"
-      >
-        <span> <img class="h-40 w-60" src="../assets/images/pizza-2.jpg" alt=""></span>
+        v-for="thepizza in pizza.items" :key="thepizza">
+        <span> <img class="h-40 w-60" :src="thepizza.image" alt=""></span>
         <span class="flex cursor-pointer">
           <span class="ml-3 mt-1 flex-col flex">
             <span class="font-semibold text-xl">{{ thepizza.pizza_name }}</span>
             <div class="font-semibold mt-3 mr-1 text-xl"><span class="text-xs text-gray-600">NGN</span>{{ thepizza.price }}</div>
             <div class="mt-3">
               <span class="mr-2 text-xs">Qty</span>
-              <input class="w-10 text-center" v-model="thepizza.quantity" type="number" name="" id="">
+              <input class="w-10 text-center" disabled v-model="thepizza.quantity" type="number" name="" id="">
             </div>
             <div class="mt-3">
               <span class="mr-1 text-xs">Total:</span>
@@ -39,7 +38,7 @@
         <span><button @click="deleteCartItem(thepizza.id)" class="bg-red-700 rounded-full mt-5 py-3 px-5 text-white font-bold">x</button></span>
       </div>
     </div>
-    <div class="flex justify-center text-white" v-if="countCartItems > 0">
+    <div class="flex justify-center text-white mb-7" v-if="countCartItems > 0">
       <button @click="nextpage" class="flex justify-between w-96 bg-green-700 rounded-lg px-6 py-2 font-semibold">
         <div>
           <div>Grand Total</div>
@@ -102,7 +101,7 @@
     </div>
   </div>
   
-  <Footer />
+  <Footer class="mt-10" />
 </template>
 
 <script>
@@ -137,7 +136,7 @@ export default {
        auth_pay_link.value = res.data.data.authorization_url
        window.location.href = auth_pay_link.value;
        emptyCart()
-       getCartItems()
+      //  getCartItems()
       }).catch((error) => {
         if(error.res){
           if (error.response.status === 500) {
@@ -156,8 +155,8 @@ export default {
       .then((res) => {
         cartItems.value = res.data.data
         getGrandTotal.value = res.data.data[0].grand_total
-        store.dispatch('getCartCount', res.data.data[0].items.length)
-
+        store.dispatch('getCartCount', res.data.data[0]?.items?.length)
+        
         loading.value = false
       }).catch((error) => {
         if(error.response){
@@ -176,8 +175,10 @@ export default {
 
     const deleteCartItem = async (id) => {
       await axios.delete(`/cart-item/${id}`)
+      store.dispatch('getCartCount')
+
        getCartItems()
-      toast.success('Cart item deleted!', {
+      toast.success('Cart item removed!', {
         timeout:10000
       })
     }

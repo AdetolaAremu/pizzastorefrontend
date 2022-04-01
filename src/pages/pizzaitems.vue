@@ -1,10 +1,10 @@
 <template>
   <Navbar />
-  <div class="pt-24 px-8 lg:px-16">
+  <div class="pt-24 px-8 lg:px-16 smallerscreen">
     
     <div class="">
       <input type="text" placeholder="Input search text here e.g french pizza" 
-        class="border-2 border-purple-500 py-2 rounded-md w-72 mb-3" @keyup="filterProduct($event.target.value)">
+        class="border-2 border-purple-500 py-2 rounded-md w-60 lg:w-72 xl:lg-72 mb-3" @keyup="filterProduct($event.target.value)">
     </div>
 
     <div v-if="loading === true" wire:loading class="overflow-hidden py-36 mt-3 opacity-75 flex flex-col items-center justify-center">
@@ -13,10 +13,10 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 mb-10" v-if="loading === false">
       <div class="flex mt-2 mr-0 md:mr-2" v-for="(pizza, index) in pizzaitems" :key="index">
-        <img class="h-60 w-48" src="../assets/images/pizza-2.jpg" alt="">
+        <img class="h-60 w-48" :src="pizza.images.main" alt="">
         <div class=" bg-gradient-to-tl from-gray-800 via-black to-gray-900 h-60 w-52">
-          <div class="font-semibold text-lg text-center mt-3 mb-2 text-white">{{ pizza.name }}</div>
-          <div class="px-3 text-gray-400 text-xs md:text-base lg:text-base">{{ pizza.description }}</div>
+          <div class="font-semibold text-lg text-center mt-3 mb-2 text-white smalltitle">{{ pizza.name }}</div>
+          <div class="px-3 text-gray-400 text-xs md:text-base lg:text-base textverysmall">{{ pizza.description }}</div>
           <div class="mt-5 flex justify-between flex-col md:flex-row lg:flex-row px-3">
             <div class="text-yellow-700 font-bold text-sm lg:text-lg"><span class="text-xs lg:text-sm">#</span>{{ pizza.price }}</div>
             <button v-if="$store.state.isAuthenticated===true" class="bg-red-700 text-white rounded-full py-1 px-3 hover:bg-white hover:text-red-700 text-xs lg:text-base" @click="addToCart(pizza)">Add to cart</button>
@@ -165,5 +165,24 @@ export default {
 	100% {
 		transform: rotate(360deg);
 	}
+}
+
+@media screen and (max-width:300px) {
+  .smallerscreen {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .textverysmall {
+    font-size: 10px;
+  }
+
+  .smalltitle {
+    font-size: 12px;
+  }
+
+  .reducewidth {
+    width:16.7rem;
+  }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="font-sans antialiased" id="app">
-    <nav class="flex items-center justify-between flex-wrap text-white bg-black z-50 p-6 absolute 
+    <nav class="flex items-center justify-between flex-wrap text-white bg-gray-900 p-6 z-50 absolute 
       w-full lg:px-20 md:px-3 px-3"
     >
       <router-link to="/" class="flex items-center flex-no-shrink">

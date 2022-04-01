@@ -27,6 +27,9 @@
           </div>
         </div>
       </div>
+      <div class="my-3 text-center" v-if="allPizzas.length === 0 && loading === false">
+        No content to display
+      </div>
     </div>
   </div>
 
