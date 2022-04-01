@@ -28,6 +28,9 @@
           </tr>
         </tbody>
       </table>
+      <div v-if="loading === true" wire:loading class="overflow-hidden mt-3 opacity-75 flex flex-col items-center justify-center">
+        <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -40,6 +43,7 @@ export default {
   setup(){
     const stats = ref('')
     const users = ref([])
+    const loading = ref(false)
 
     const getStats = async () => {
       const response = await axios.get('/admin-stats')
@@ -47,13 +51,17 @@ export default {
     }
 
     const getUsers = async () => {
+      loading.value = true
+
       const response = await axios.get('/users')
       users.value = response.data.data
+
+      loading.value = false
     }
 
     onMounted(getStats(), getUsers())
 
-    return { stats, getStats, getUsers, users }
+    return { stats, getStats, getUsers, users, loading }
   }
 }
 </script>

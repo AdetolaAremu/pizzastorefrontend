@@ -107,7 +107,7 @@
     <main id="content" class="flex-1 p-6 lg:px-4 bg-gray-300">
       <div class="max-w-7xl mx-auto">
         <div class="flex justify-between">
-          <div class="text-lg">Home</div>
+          <div class="text-lg">{{ $router.currentRoute.value.name }}</div>
           <div class="relative">
             <a href="#" class="no-underline text-lg px-4 py-1 leading-none
              -ml-4 sm:mt-0 flex" @click="toggleNameDropDown" ref="targetToggle">

@@ -54,14 +54,14 @@ const routes = [
     },
     children:
     [
-      {path:"/user/dashboard", component:DashboardHome},
-      {path:"/user/order-history", component:OrderHistory},
-      {path:"/user/profile", component:Profile},
-      {path:"/user/order/:id", component:getOrder},
-      {path:"/user/post-pizza",  component:PostPizza},
-      {path:"/user/all-pizzas",  component:AllPizzas},
-      {path:"/user/edit-pizza/:id",  component:editPizza},
-      {path:"/user/admin-stats",  component:adminStats}
+      {path:"/user/dashboard", component:DashboardHome, name:"Dashboard"},
+      {path:"/user/order-history", component:OrderHistory, name:'Order History'},
+      {path:"/user/profile", component:Profile, name:'Profile'},
+      {path:"/user/order/:id", component:getOrder, name:'Order',},
+      {path:"/user/post-pizza",  component:PostPizza, name:'Create Pizza'},
+      {path:"/user/all-pizzas",  component:AllPizzas, name:'All Pizzas'},
+      {path:"/user/edit-pizza/:id",  component:editPizza, name:'Edit Pizza'},
+      {path:"/user/admin-stats",  component:adminStats, name:'Admin Stats'},
     ]
   }
 ]
