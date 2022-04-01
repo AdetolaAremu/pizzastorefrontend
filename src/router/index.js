@@ -11,6 +11,7 @@ import getOrder from '../Private/dashboard/getOrder.vue';
 import PostPizza from '../Private/dashboard/postpizza.vue';
 import AllPizzas from '../Private/dashboard/allpizza.vue';
 import editPizza from '../Private/dashboard/editpizza.vue';
+import adminStats from '../Private/dashboard/admin-stats.vue';
 import Register from '../pages/register.vue';
 import Login from '../pages/login.vue';
 
@@ -59,7 +60,8 @@ const routes = [
       {path:"/user/order/:id", component:getOrder},
       {path:"/user/post-pizza",  component:PostPizza},
       {path:"/user/all-pizzas",  component:AllPizzas},
-      {path:"/user/edit-pizza/:id",  component:editPizza}
+      {path:"/user/edit-pizza/:id",  component:editPizza},
+      {path:"/user/admin-stats",  component:adminStats}
     ]
   }
 ]
