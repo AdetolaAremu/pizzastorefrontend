@@ -13,7 +13,7 @@
         <div class="" v-for="pizza in allPizzas" :key="pizza.id">
           <div class="bg-gray-200 w-64 mx-3 my-2 py-3 px-2 rounded-md shadow-lg">
             <div><span class="font-semibold">Name: </span>{{ pizza?.name }}</div>
-            <div><span class="font-semibold mt-3">Price: </span>Price: {{ pizza?.price }}</div>
+            <div><span class="font-semibold mt-3">Price: </span>{{ pizza?.price }}</div>
             <div><span class="font-semibold mt-3">Description: </span> {{ pizza?.description }}</div>
             <div><span class="font-semibold mt-3">Variant: </span> {{ pizza?.variant?.name }}</div>
             <div class="text-center">

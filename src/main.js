@@ -12,8 +12,8 @@ import FontAwesomeIcon from './utilities/fontawesome';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-axios.defaults.baseURL = 'http://localhost:8000/api/';
-// axios.defaults.baseURL = 'https://peeza.herokuapp.com/api/';
+// axios.defaults.baseURL = 'http://localhost:8000/api/';
+axios.defaults.baseURL = 'https://peeza.herokuapp.com/api/';
 axios.defaults.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`
 
 createApp(App).use(store).use(router).use(Toast).use(VueSidebarMenu).component("font-awesome-icon", FontAwesomeIcon)
