@@ -14,4 +14,4 @@ https://peeza.netlify.app/
 - **AOS** for on scroll animation.
 
 ## See a preview of this project below:
-![preview](https://raw.githubusercontent.com/AdetolaAremu/pizzastorefrontend/src/assets/images/peeza.webp)
+![preview](https://raw.githubusercontent.com/AdetolaAremu/pizzastorefrontend/master/src/assets/images/peeza.webp)
