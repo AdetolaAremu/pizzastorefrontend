@@ -1,24 +1,17 @@
-# pizzastorefrontend
+# This project is hosted on:
+https://peeza.netlify.app/
 
-## Project setup
-```
-npm install
-```
+### This is the frontend repository of the Pizza (Peeza) Delivery Project.
+### The backend API is hosted on Heroku, images hosted on AWS S3 and it is built with Laravel 8 (PHP).
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Technologies used for the frontend are as follows:
 
-### Compiles and minifies for production
-```
-npm run build
-```
+- **Vuex** for state management.
+- **Vuex Persist Library** for persisting the states in Vuex.
+- **Font Awesome Icons** for all icons.
+- **Tailwind CSS** for styling (css).
+- **Vue-Toastify** for the notification.
+- **AOS** for on scroll animation.
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## See a preview of this project below:
+![preview](https://raw.githubusercontent.com/AdetolaAremu/pizzastorefrontend/src/assets/images/peeza.webp)
