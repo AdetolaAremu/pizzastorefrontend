@@ -10,8 +10,7 @@
       </div>
     </div>
   </div>
-
-  
+ 
   <div v-if="loading === true" wire:loading class="overflow-hidden py-36 mt-3 opacity-75 flex flex-col items-center justify-center">
     <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-36 w-36 mb-4"></div>
   </div>
@@ -178,7 +177,7 @@ export default {
       await axios.delete(`/cart-item/${id}`)
       store.dispatch('getCartCount')
 
-       getCartItems()
+      getCartItems()
       toast.success('Cart item removed!', {
         timeout:10000
       })

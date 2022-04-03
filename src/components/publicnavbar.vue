@@ -20,9 +20,9 @@
           <router-link to="/store" class="no-underline block mt-4 text-lg sm:inline-block sm:mt-0 text-teal-lighter hover:text-white mr-4">
             Store
           </router-link>
-          <router-link to="/" class="no-underline block mt-4 text-lg sm:inline-block sm:mt-0 text-teal-lighter hover:text-white">
+          <a href="https://github.com/AdetolaAremu/pizzastorefrontend" target="_blank" class="no-underline block mt-4 text-lg sm:inline-block sm:mt-0 text-teal-lighter hover:text-white">
             Github
-          </router-link>
+          <a>
         </div>
         <div>
           <router-link to="/cart" class="no-underline block text-lg sm:inline-block sm:mt-0 text-teal-lighter 
