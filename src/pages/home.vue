@@ -104,7 +104,7 @@
                 <p class="text-md text-gray-500 px-8">
                   <span class="font-bold text-black">That is why the images are not loading/showing</span>, it is being attended to, please bear with me. <br>
                   <span class="font-bold text-black">It is also making me sad</span> because I have had to put a lot into creating this project. <br>
-                  <span class="font-bold text-black">Thank you for your patience.</span>
+                  <span class="font-bold text-black">Thank you for your patience and understanding.</span>
                 </p>
               </div>
               <div class="p-3 mt-2 text-center space-x-4 md:block">
