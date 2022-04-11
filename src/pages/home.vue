@@ -89,6 +89,44 @@
   </div>
 
 
+  <div id="Modal">
+    <transition name="animodal">
+      <div class="fixed inset-0 z-20" v-if="makeModalActive">
+        <div class="absolute inset-0 bg-black bg-opacity-75" @click="closeModal"></div>
+        <div class="flex flex-col items-center justify-center w-screen h-screen">
+          <div class="relative animodal-inner">
+            <div class="rounded bg-white overflow-hidden">
+            <div>
+              <div class="text-center p-3 flex-auto justify-center leading-6">
+                <font-awesome-icon icon="frown" class="text-8xl text-red-700" />
+                
+                <h2 class="text-2xl font-bold py-4">Hi, I am currently having issues with my AWS S3 account.</h2>
+                <p class="text-md text-gray-500 px-8">
+                  <span class="font-bold text-black">That is why the images are not loading/showing</span>, it is being attended to, please bear with me. <br>
+                  <span class="font-bold text-black">It is also making me sad</span> because I have had to put a lot into creating this project. <br>
+                  <span class="font-bold text-black">Thank you for your patience.</span>
+                </p>
+              </div>
+              <div class="p-3 mt-2 text-center space-x-4 md:block">
+                <button
+                  @click="closeModal"
+                  class="mb-2 md:mb-0 bg-purple-500 border border-purple-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-purple-600"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="animodal-inner absolute top-0 right-0 cursor-pointer" @click="closeModal">
+          <div class="text-white text-lg p-6"><i class="material-icons"></i></div>
+        </div>
+      </div>
+    </transition>
+  </div>
+
+
   <div class="bg-gradient-to-tl from-gray-800 via-black to-gray-900 w-full mt-16 mb-10 px-5 overflow-hidden">
     <div class="pt-16 pb-10 text-white font-semibold text-3xl text-center">
       Our <span class="text-red-700">Services</span> at a glance
@@ -188,6 +226,11 @@ export default {
     const store = useStore()
     const loading = ref(false)
     const active = ref(false)
+    const makeModalActive = ref(true)
+
+    const closeModal = () => {
+      makeModalActive.value = false
+    }
 
     const destroy = () => {
       active.value = false
@@ -226,7 +269,8 @@ export default {
 
     onMounted(getAllPizzas())
 
-    return { pizzaitems, getAllPizzas, addToCart, currentPizzaId, loading, active, destroy
+    return { pizzaitems, getAllPizzas, addToCart, currentPizzaId, loading, active, destroy, makeModalActive,
+      closeModal
     }
   }
 }
