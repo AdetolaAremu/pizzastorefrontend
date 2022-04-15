@@ -226,7 +226,7 @@ export default {
     const store = useStore()
     const loading = ref(false)
     const active = ref(false)
-    const makeModalActive = ref(true)
+    const makeModalActive = ref(false)
 
     const closeModal = () => {
       makeModalActive.value = false
